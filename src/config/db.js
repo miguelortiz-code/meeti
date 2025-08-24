@@ -15,6 +15,7 @@ const db = new Sequelize(
       idle: 10000,
     },
     logging: false,
+    timezone: "-05:00",
   }
 );
 
@@ -23,6 +24,7 @@ const connection = async () => {
   try {
     await db.authenticate();
     console.log(`✅ Conexión exitosa a la base de datos ${process.env.DB_NAME}`);
+    await db.sync();
   } catch (error) {
     console.error(`❌ Error al conectar a la base de datos: ${error}`);
     process.exit(1); // Detiene la app si no conecta
