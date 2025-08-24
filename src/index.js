@@ -1,7 +1,7 @@
 import express from 'express';
 import expressEjsLayouts from 'express-ejs-layouts';
 import {home} from './routes/index.routes.js';
-import connection from './config/db.js'
+import {connection} from './config/db.js'
 const app = express();
 
 // Connection database
