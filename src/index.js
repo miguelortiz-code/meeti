@@ -1,9 +1,11 @@
 import express from 'express';
+import expressEjsLayouts from 'express-ejs-layouts';
 import {home} from './routes/index.routes.js';
 
 const app = express();
 
 // Habilitar EJS como template engine
+app.use(expressEjsLayouts);
 app.set('view engine', 'ejs');
 app.set('views', 'src/views');
 
