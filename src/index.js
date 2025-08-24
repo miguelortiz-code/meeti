@@ -6,8 +6,11 @@ import {Users} from './models/index.model.js';
 
 const app = express();
 
+// Habilitar lectura de datos de formularios
+app.use(express.urlencoded({extended: true}));
+
 const startApp = async () => {
-  try {
+  try {    
     // primero conecta
     await connection();
 
