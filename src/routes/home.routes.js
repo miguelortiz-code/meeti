@@ -1,13 +1,10 @@
 import express from 'express';
+import {viewHome, viewRegister} from '../controllers/index.controller.js'
 const router = express.Router();
 
 
-router.get('/', (req, res) =>{
-    res.send('Inicio');
-});
+router.get('/', viewHome);
 
-router.get('/register', (req, res) =>{
-    res.send('Crea tu cuenta en meeti')
-});
+router.get('/register', viewRegister);
 
 export default router;
