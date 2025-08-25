@@ -26,18 +26,21 @@
         </nav>
     </header>
 
+    <!-- BODY -->
+    <%-  body %>
     <!-- FLASH -->
     <% const categories = Object.keys(message) %>
     <% if (categories.length) { %>
-        <% message[categories].forEach(alerta => { %>
-            <div class="alertas">
-                <p class="alerta <%= categories %>"> <%= alerta %> </p>
-            </div>
+        <% categories.forEach(category => { %>
+            <% message[category].forEach(alerta => { %>
+                <div class="alertas">
+                    <p class="alerta <%= category %>"><%= alerta %></p>
+                </div>
+            <% }) %>
         <% }) %>
     <% } %>
 
-    <!-- BODY -->
-    <%-  body %>
+    
     <!-- FOOTER -->
     <footer class="site-footer contenedor">
         <nav class="nav">
