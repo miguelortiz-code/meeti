@@ -3,12 +3,12 @@
     <form action="/register" method="POST" class="default-form">
         <div class="campo">
             <label for="name">Nombre:</label>
-            <input type="text" name="name" id="name" placeholder="john Doe">
+            <input type="text" name="name" id="name" placeholder="john Doe" value="<%= user ? user.name : '' %>" >
         </div>
         
         <div class="campo">
             <label for="email">Correo Electrónico:</label>
-            <input type="email" name="email" id="email" placeholder="johnDoe@gmail.com">
+            <input type="email" name="email" id="email" placeholder="johnDoe@gmail.com" value="<%= user ? user.email : '' %>" >
         </div>
 
         <div class="campo">

@@ -2,10 +2,11 @@ import express from 'express';
 import expressEjsLayouts from 'express-ejs-layouts';
 import flash from 'connect-flash';
 import cookieParser from 'cookie-parser';
+import session from 'express-session';
 import { home } from './routes/index.routes.js';
 import { connection, db } from './config/db.js';
 import {Users} from './models/index.model.js';
-import session from 'express-session';
+import message from './middleware/message.middleware.js';
 
 const app = express();
 
@@ -35,6 +36,7 @@ const startApp = async () => {
 
     // Agregando FLASH
     app.use(flash());
+    app.use(message);
 
     // Habilitar EJS como template engine
     app.use(expressEjsLayouts);

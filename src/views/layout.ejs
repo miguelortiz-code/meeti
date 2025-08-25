@@ -26,6 +26,16 @@
         </nav>
     </header>
 
+    <!-- FLASH -->
+    <% const categories = Object.keys(message) %>
+    <% if (categories.length) { %>
+        <% message[categories].forEach(alerta => { %>
+            <div class="alertas">
+                <p class="alerta <%= categories %>"> <%= alerta %> </p>
+            </div>
+        <% }) %>
+    <% } %>
+
     <!-- BODY -->
     <%-  body %>
     <!-- FOOTER -->
