@@ -79,9 +79,18 @@ const register = async (req, res) => {
     }
 };
 
+// vista para login
+const viewLogin = (req, res) =>{
+    res.render('auth/login',{
+        namePage: 'Iniciar Sesión',
+        user: {}
+    });
+};
+
 
 export {
     viewHome,
     viewRegister,
-    register
+    register,
+    viewLogin
 }
