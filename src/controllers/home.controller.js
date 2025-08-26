@@ -3,6 +3,7 @@ import { check, validationResult } from "express-validator";
 import { Users } from "../models/index.model.js";
 import { generateId } from "../helpers/token.helper.js";
 import { emailRegister } from "../helpers/emails.helper.js";
+import { where } from "sequelize";
 
 // Vista de la página principal
 const viewHome = (req, res) => {
@@ -123,6 +124,42 @@ const register = async (req, res) => {
   }
 };
 
+// Vista de confirmar cuenta
+const ConfirmAccount = async (req, res) =>{
+  // extraer el token desde la url
+  const {token } = req.params;
+  
+  // Buscar usuario mediante el token
+  const user = await Users.findOne({where: {token}});
+  
+  // Verificar si el usuario  no existe
+  if(!user){
+    return res.render('auth/confirm',{
+      namePage: 'Error al confirmar tu cuenta',
+      message: {
+        error: [
+          "La cuenta no existe o el enlace de confirmación no es válido. Intenta nuevamente",
+        ],
+      }
+    })
+  }
+
+  // confirmar cuenta del usuario
+  user.token = null;
+  user.active = 1;  
+ await user.save()
+
+ // Redireccionar al usuario
+ req.flash('exito',  'La cuenta se ha confirmado con exito, ya puedes iniciar sesión')
+ return res.render("auth/login", {
+      namePage: "Iniciar Sesión",
+      message: req.flash(),
+      user: {},
+    });
+
+
+}
+
 // vista para login
 const viewLogin = (req, res) => {
   res.render("auth/login", {
@@ -131,4 +168,4 @@ const viewLogin = (req, res) => {
   });
 };
 
-export { viewHome, viewRegister, register, viewLogin };
+export { viewHome, viewRegister, register, viewLogin, ConfirmAccount };
