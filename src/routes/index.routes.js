@@ -1,6 +1,6 @@
-import home from './home.routes.js';
+import auth from './auth.routes.js';
 
 
 export{
-    home
+    auth
 }

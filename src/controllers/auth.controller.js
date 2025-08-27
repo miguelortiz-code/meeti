@@ -3,7 +3,7 @@ import { check, validationResult } from "express-validator";
 import { Users } from "../models/index.model.js";
 import { generateId } from "../helpers/token.helper.js";
 import { emailRegister } from "../helpers/emails.helper.js";
-import { where } from "sequelize";
+import passport from "passport";
 
 // Vista de la página principal
 const viewHome = (req, res) => {
@@ -168,4 +168,14 @@ const viewLogin = (req, res) => {
   });
 };
 
-export { viewHome, viewRegister, register, viewLogin, ConfirmAccount };
+// Función para login de usuario
+const login = async (req, res, next) =>{
+  passport.authenticate('local', {
+    successRedirect: '/dashboard',
+    failureRedirect: '/login',
+    failureFlash: true,
+    badRequestMessage: 'Los campos son obligatorios'
+  })(req, res, next);
+}
+
+export { viewHome, viewRegister, register, viewLogin, ConfirmAccount, login };

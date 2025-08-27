@@ -3,10 +3,11 @@ import expressEjsLayouts from 'express-ejs-layouts';
 import flash from 'connect-flash';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
-import { home } from './routes/index.routes.js';
+import { auth } from './routes/index.routes.js';
 import { connection, db } from './config/db.js';
 import {Users} from './models/index.model.js';
 import message from './middleware/message.middleware.js';
+import passport from './config/passport.js';
 
 const app = express();
 
@@ -34,6 +35,10 @@ const startApp = async () => {
       saveUninitialized: false
     }));
 
+    // inicializar passport
+    app.use(passport.initialize());
+    app.use(passport.session());
+
     // Agregando FLASH
     app.use(flash());
     app.use(message);
@@ -42,12 +47,12 @@ const startApp = async () => {
     app.use(expressEjsLayouts);
     app.set('view engine', 'ejs');
     app.set('views', 'src/views');
-
-    // Routing
-    app.use('/', home);
-
+    
     // Habilitando archivos estáticos
     app.use(express.static('src/public'));
+
+    // Routing
+    app.use('/', auth);
 
     // Arrancando servidor
     app.listen(process.env.backend_port, () => {
