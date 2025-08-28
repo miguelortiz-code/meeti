@@ -3,7 +3,7 @@ import expressEjsLayouts from 'express-ejs-layouts';
 import flash from 'connect-flash';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
-import { auth } from './routes/index.routes.js';
+import { auth, dashboard } from './routes/index.routes.js';
 import { connection, db } from './config/db.js';
 import {Users} from './models/index.model.js';
 import message from './middleware/message.middleware.js';
@@ -53,6 +53,7 @@ const startApp = async () => {
 
     // Routing
     app.use('/', auth);
+    app.use('/', dashboard);
 
     // Arrancando servidor
     app.listen(process.env.backend_port, () => {
