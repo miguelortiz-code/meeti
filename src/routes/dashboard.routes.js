@@ -1,9 +1,10 @@
 import express from 'express';
 import {viewDashboard} from '../controllers/dashboard.controller.js';
+import {noCache, isAuthenticated} from '../middleware/isAuthenticated.js';
 
 const router = express.Router();
 
-router.get('/dashboard', viewDashboard)
+router.get('/dashboard', isAuthenticated, noCache, viewDashboard);
 
 
 
