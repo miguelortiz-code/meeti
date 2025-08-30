@@ -1,3 +1,5 @@
+import {Categories} from '../models/index.model.js';
+
 // Vista del panel principal
 const viewDashboard = (req, res) =>{
     res.render('admin/dashboard',{
@@ -6,9 +8,12 @@ const viewDashboard = (req, res) =>{
 }
 
 // Vista de formularios
-const formNewGruop = (req, res) =>{
+const formNewGruop = async (req, res, next) =>{
+    const categories = await Categories.findAll();
+
     res.render('admin/groups/new-group',{
-        namePage: 'Crea un nuevo grupo'
+        namePage: 'Crea un nuevo grupo',
+        categories
     })
 };
 
