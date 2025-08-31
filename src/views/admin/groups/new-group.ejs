@@ -3,7 +3,7 @@
     <form action="/new-group" method="POST" class="default-form">
         <div class="campo">
             <label for="name">Nombre</label>
-            <input type="text" name="name" id="name" placeholder="Nombre Grupo">
+            <input type="text" name="name" id="name" placeholder="Nombre Grupo" value="<%=data.name ?  data.name : '' %>">
         </div>
 
         <div class="campo descripcion">
@@ -17,10 +17,14 @@
         <div class="campo">
             <label for="category">Categoria</label>
             <select name="category" id="category">
-                <option value="" selected disabled>Selecciona una categoria</option>
-                <%  categories.forEach(category => {%>
-                    <option value="<%=category.id%>"><%= category.category %> </option>
-                <%})%>
+                <option value="" disabled <%= !data?.category ? "selected" : "" %>>Selecciona una categoria</option>
+                <% categories.forEach(category => { %>
+                <option 
+                    value="<%= category.id %>" 
+                    <%= data && data.category == category.id ? "selected" : "" %>>
+                    <%= category.category %>
+                </option>
+                <% }) %>
             </select>
         </div>
         
@@ -31,7 +35,7 @@
 
         <div class="campo">
             <label for="url">Sitio Web</label>
-            <input type="url" name="url" id="url" placeholder="https://www.google.com">
+            <input type="url" name="url" id="url" placeholder="https://www.google.com" value="<%= data.url ? data.url : '' %>">
         </div>
 
         <div class="campo enviar">

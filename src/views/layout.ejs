@@ -27,8 +27,6 @@
         </nav>
     </header>
 
-    <!-- BODY -->
-    <%-  body %>
     <!-- FLASH -->
     <% const categories = Object.keys(message) %>
     <% if (categories.length) { %>
@@ -41,7 +39,9 @@
         <% }) %>
     <% } %>
 
-    
+    <!-- BODY -->
+    <%-  body %>
+        
     <!-- FOOTER -->
     <footer class="site-footer contenedor">
         <nav class="nav">
