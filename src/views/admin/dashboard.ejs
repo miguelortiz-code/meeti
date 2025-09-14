@@ -1,7 +1,7 @@
 <main class="contenedor panel-administracion">
     <h1> <%= namePage%> </h1>
     <div class="contenedor-botones">
-        <a href="/new-group" class="btn btn-amarillo">Nuevo Grupo</a>
+        <a href="/groups/new-group" class="btn btn-amarillo">Nuevo Grupo</a>
         <a href="/new-meeti" class="btn btn-azul">Nuevo Meeti</a>
         <a href="/profile" class="btn btn-rosa">Editar Perfil</a>
         <a href="/image" class="btn btn-amarillo">Imagen Perfil</a>
@@ -56,42 +56,24 @@
 
     <div class="seccion-admin">
         <h2>Tus Grupos </h2>
-        <ul>
-            <li>
-                <div class="informacion-admin">
-                    <h3>Block Chain Guadalajara</h3>
-                </div>
+        <% if(groups.length){%>
+            <ul>
+                <% groups.forEach(group => { %>
+                <li>
+                    <div class="informacion-admin">
+                        <h3><%= group.name%></h3>
+                    </div>
 
-                <div class="acciones contenedor-botones">
-                    <a href="#" class="btn btn-verde">Editar</a>
-                    <a href="#" class="btn btn-azul2">Imagen</a>
-                    <a href="#" class="btn btn-rojo">Eliminar</a>
-                </div>
-            </li>
-
-            <li>
-                <div class="informacion-admin">
-                    <h3>GraphQL Guadalajara</h3>
-                </div>
-
-                <div class="acciones contenedor-botones">
-                    <a href="#" class="btn btn-verde">Editar</a>
-                    <a href="#" class="btn btn-azul2">Imagen</a>
-                    <a href="#" class="btn btn-rojo">Eliminar</a>
-                </div>
-            </li>
-
-            <li>
-                <div class="informacion-admin">
-                    <h3>NodeJs Guadalajara</h3>
-                </div>
-
-                <div class="acciones contenedor-botones">
-                    <a href="#" class="btn btn-verde">Editar</a>
-                    <a href="#" class="btn btn-azul2">Imagen</a>
-                    <a href="#" class="btn btn-rojo">Eliminar</a>
-                </div>
-            </li>
-        </ul>
+                    <div class="acciones contenedor-botones">
+                        <a href="/groups/edit-group/<%= group.code%>" class="btn btn-verde">Editar</a>
+                        <a href="/groups/image-group/<%= group.code%>" class="btn btn-azul2">Imagen</a>
+                        <a href="/groups/delete/<%= group.code%>" class="btn btn-rojo">Eliminar</a>
+                    </div>
+                </li>
+            <% }); %>
+            </ul>
+        <%} else{%>
+            <p>No tienes grupos creados.</p>
+        <%}%>
     </div>
 </main>
