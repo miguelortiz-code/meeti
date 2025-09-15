@@ -109,8 +109,28 @@ const newGroup = async (req, res) => {
 
 
 // vista para editar grupo
-const formEditGroup = (req, res) =>{
-  res.send('Formulario para editar los grupos');
+const formEditGroup = async (req, res, next) =>{
+  // Extarer codigo del grupo
+  const {code} = req.params;
+
+  // Realizar consulta al mismo tiempo
+  const consultas = [];
+  consultas.push(Groups.findOne({where: {code}}));
+  consultas.push(Categories.findAll());
+  
+  const [group, categories] = await Promise.all(consultas);
+
+  // Si no existe el grupo
+  if(!group){
+    return res.redirect('/dashboard');
+  }
+  
+  // Si existe el grupo, mostrar formulario
+  res.render('admin/groups/edit-group',{
+    namePage: `Editar grupo: ${group.name}`,
+    categories,
+    group,
+  });
 }
 
 export {formNewGruop, newGroup, formEditGroup};
