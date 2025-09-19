@@ -1,6 +1,6 @@
 <main class="contenedor contenedor-formularios no-padding">
     <h1> <%=namePage %> </h1>
-    <form method="POST" enctype="multipart/form-data" class="default-form">
+    <form action="/groups/edit-group/<%=group.code%>" method="POST"  class="default-form">
         <div class="campo">
             <label for="name">Nombre</label>
             <input type="text" name="name" id="name" placeholder="Nombre Grupo" value="<%= group.name%>">

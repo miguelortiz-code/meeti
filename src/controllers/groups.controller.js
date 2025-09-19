@@ -133,4 +133,40 @@ const formEditGroup = async (req, res, next) =>{
   });
 }
 
-export {formNewGruop, newGroup, formEditGroup};
+
+// Función para editar grupos
+const editGroup = async (req, res, next) =>{
+  // Extaer el codigo del grupo de la url
+  const {code} = req.params;
+  // Id del usuario que está logueado
+  const {id} = req.user;
+  // Buscar grupo mediante el código
+  const group = await Groups.findOne({where: {code, id_user: id}});
+
+  // Si no es el creador
+  if(!group){
+     req.flash('error', 'No eres el creador del grupo');
+     res.redirect('/dashboard');
+    return next();  
+  }
+
+  // Obtener valores del formulario
+  const { name, category:id_category, url } = req.body;
+  const description = striptags(req.body.description);
+
+  // Asignar nuevos valores
+  group.name = name;
+  group.description = description;
+  group.id_category = id_category;
+  group.url = url;
+
+  // Almacenar nuevos datos en la DB
+  await group.save();
+  req.flash('exito', `Grupo actualizado correctamente`);
+  res.redirect('/dashboard');
+
+
+
+};
+
+export {formNewGruop, newGroup, formEditGroup, editGroup};
