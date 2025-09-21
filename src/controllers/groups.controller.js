@@ -169,4 +169,25 @@ const editGroup = async (req, res, next) =>{
 
 };
 
-export {formNewGruop, newGroup, formEditGroup, editGroup};
+// vista para editar imagen del grupo
+const formmageGroup = async (req, res) =>{
+  // Extraer la codigo del grupo desde la url
+  const {code} = req.params;
+  // Consultar grupo mediante el código
+  const group = await Groups.findOne({where : {code}});
+  
+  // Si no existe el grupo
+  if(!group){
+     req.flash('error', 'No exite el grupo seleccionado');
+     res.redirect('/dashboard');
+    return next();  
+  }
+
+  // si todo esta bien, mostrar formulario
+  res.render('admin/groups/edit-group-image', {
+    namePage : `Editar imagen del grupo : ${group.name}`,
+    group
+  })
+}
+
+export {formNewGruop, newGroup, formEditGroup, editGroup, formmageGroup};

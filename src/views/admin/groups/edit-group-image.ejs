@@ -1,0 +1,20 @@
+<main class="contenedor contenedor-formularios">
+    <h1> <%=namePage %> </h1>
+    <form action="/groups/image-group/<%=group.code%>" method="POST" enctype="multipart/form-data" class="default-form">
+        <div class="campo">
+            <input type="file" name="image" id="image">
+        </div>
+        <% if (group.image){%>
+            <div class="campo">
+                <label for="image">Imagen</label>
+                <img src="/uploads/groups/<%= group.image%>" alt="Imagen de: <%= group.name%>" width="600">
+            </div>
+        
+            <div class="campo enviar">
+                <input type="submit" value="Editar imagen" class="btn btn-rosa">
+            </div>
+         <%} else { %>
+            <p>Aún no has agregado una imagen para el grupo. Súbela aquí. </p>   
+        <%}%>
+    </form>
+</main>
