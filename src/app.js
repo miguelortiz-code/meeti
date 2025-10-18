@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import {authRoutes} from './routes/index.routes.js';
 
 dotenv.config({ path: '.env' });
 
@@ -11,7 +12,9 @@ try {
         throw new Error('Faltan variables de entorno: PORT o URL_BACK');
     }
 
-    
+    // Routing
+    app.use('/auth', authRoutes);
+
 
 
 
