@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import path from 'path'
 import {authRoutes} from './routes/index.routes.js';
 
 dotenv.config({ path: '.env' });
@@ -11,6 +12,14 @@ try {
     if (!process.env.PORT || !process.env.URL_BACK) {
         throw new Error('Faltan variables de entorno: PORT o URL_BACK');
     }
+
+    // Habilitar EJS como Template Engine
+    app.set('view engine', 'ejs');
+    // Ubicación de las vistas
+    app.set('views', path.join('src/views'));
+
+    // Archivos estaticos
+    app.use(express.static('src/public'))
 
     // Routing
     app.use('/auth', authRoutes);

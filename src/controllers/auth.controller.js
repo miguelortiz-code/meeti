@@ -1,14 +1,11 @@
 // Vista de formulario de registro
 const viewRegister = (req, res) =>{
-    res.send('Formulario de registro');
-    
-    console.log('Formulario de registro');
+    res.render('auth/register');
 }
 
 // Vista de formulario de login
 const viewLogin = (req, res) =>{
-    res.send('Formulario de login');
-    console.log('Formulario de login');
+    res.render('auth/login');
 }
 
 export{
