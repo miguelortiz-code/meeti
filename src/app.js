@@ -1,7 +1,8 @@
 import express from 'express';
 import expressEjsLayouts from 'express-ejs-layouts';
 import path from 'path';
-import { authRoutes } from './routes/index.routes.js';
+import { authRoutes } from './routes/index.routes.js'; // Routing
+import {Users} from './models/index.model.js';
 import db from './config/db.js';
 
 const app = express();

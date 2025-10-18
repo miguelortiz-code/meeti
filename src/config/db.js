@@ -18,6 +18,10 @@ const db = new Sequelize(
       acquire: 30000,
       idle: 10000,
     },
+    timezone: '-05:00', // 🇨🇴 hora Colombia
+    dialectOptions: {
+      useUTC: false
+    },
     logging: false // opcional: desactiva logs de SQL en consola
   }
 );
