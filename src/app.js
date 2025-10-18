@@ -1,4 +1,5 @@
 import express from 'express';
+import expressEjsLayouts from 'express-ejs-layouts';
 import dotenv from 'dotenv';
 import path from 'path'
 import {authRoutes} from './routes/index.routes.js';
@@ -16,6 +17,7 @@ try {
     // Habilitar EJS como Template Engine
     app.set('view engine', 'ejs');
     // Ubicación de las vistas
+    app.use(expressEjsLayouts);
     app.set('views', path.join('src/views'));
 
     // Archivos estaticos
