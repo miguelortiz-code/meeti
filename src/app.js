@@ -20,6 +20,9 @@ const startServer = async () => {
     await db.sync({ force: true });
     console.log('✅ Modelos sincronizados con la base de datos.');
 
+    // Habilitar lectura de datos de formularios
+    app.use(express.urlencoded({extended: true}));
+
     // Habilitar EJS como Template Engine
     app.set('view engine', 'ejs');
     app.use(expressEjsLayouts);
