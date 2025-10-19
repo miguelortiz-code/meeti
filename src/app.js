@@ -1,43 +1,60 @@
 import express from 'express';
 import expressEjsLayouts from 'express-ejs-layouts';
-import path from 'path';
-import { authRoutes } from './routes/index.routes.js'; // Routing
-import {Users} from './models/index.model.js';
+import path, { dirname, join } from 'path';
+import flash from 'connect-flash';
+import session from 'express-session';
+import cookieParser from 'cookie-parser';
+import { fileURLToPath } from 'url';
+import { authRoutes } from './routes/index.routes.js';
+import {flashMiddleware} from './middleware/index.middleware.js'
 import db from './config/db.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 
 const startServer = async () => {
   try {
-    // Validar variables de entorno necesarias
     if (!process.env.PORT || !process.env.URL_BACK) {
       throw new Error('Faltan variables de entorno: PORT o URL_BACK');
     }
 
-    // Conectar a la base de datos
+    // Conectar DB
     await db.authenticate();
-    // Sincroniza modelos con la base de datos
-    await db.sync({ force: true });
-    console.log('✅ Modelos sincronizados con la base de datos.');
+    await db.sync(); // evita borrar tablas
+    console.log('✅ Conexión y sincronización con la base de datos completa.');
 
-    // Habilitar lectura de datos de formularios
-    app.use(express.urlencoded({extended: true}));
+    // Middlewares base
+    app.use(express.urlencoded({ extended: true }));
+    app.use(cookieParser());
+    app.use(session({
+      secret: process.env.SECRET,
+      key: process.env.KEY,
+      resave: false,
+      saveUninitialized: false
+    }));
 
-    // Habilitar EJS como Template Engine
+    app.use(flash());
+    app.use(flashMiddleware);
+
+
+    // EJS
     app.set('view engine', 'ejs');
     app.use(expressEjsLayouts);
-    app.set('views', path.join('src/views'));
+    app.set('views', join(__dirname, 'src/views'));
 
     // Archivos estáticos
-    app.use(express.static('src/public'));
+    app.use(express.static(join(__dirname, 'src/public')));
 
-    // Routing
+    // Rutas
     app.use('/auth', authRoutes);
 
-    // Arrancar el servidor
+    // Servidor
     app.listen(process.env.PORT, () => {
       console.log(`🚀 Servidor corriendo en: ${process.env.URL_BACK}:${process.env.PORT}`);
     });
+
   } catch (error) {
     console.error('❌ Error al iniciar el servidor:', error.message);
     process.exit(1);

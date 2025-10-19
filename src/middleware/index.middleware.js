@@ -1,0 +1,1 @@
+export { flashMiddleware } from './flash.middleware.js';
