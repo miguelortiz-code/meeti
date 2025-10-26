@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import { check, validationResult } from "express-validator";
 import { Users } from "../models/index.model.js";
+import { generateId, emailRegister } from "../helpers/index.helpers.js";
 
 // Vista de formulario de registro
 const viewRegister = (req, res) => {
@@ -74,18 +75,44 @@ const register = async (req, res, next) => {
 
     // Si todo está bien => Continuar con el registro
     const { name, email, password } = req.body;
+
+    // Verificar que el usuario ya se encuentre registrado
+    const existUser = await Users.findOne({ where: { email } });
+
+    if (existUser) {
+      return res.render("auth/register", {
+        namePage: "Crear Cuenta",
+        messages: { error: ["El usuario ya se encuentra registrado"] },
+        user: { name, email },
+      });
+    }
+
     // Encriptar contraseña
     const hasedPassword = await bcrypt.hash(password, 10);
 
     // Crear usuario
-    await Users.create({
+    const user = await Users.create({
       name,
       email,
       password: hasedPassword,
+      token: generateId(),
+    });
+    
+    // Enviar mensaje de confirmación
+    emailRegister({
+      name: user.name,
+      email: user.email,
+      token: user.token,
     });
 
-    req.flash("exito", "Te has registrado correctamente");
-    res.redirect("/auth/login");
+
+    // Mostrar mensaje de confirmación de cuenta
+    res.render('templates/emails', {
+      namePage: 'Cuenta Creada Correctamente',
+      message:  "Te hemos enviado un correo con un enlace de confirmación. Por favor, revisa tu bandeja de entrada y sigue las instrucciones para activar tu cuenta.",
+    })
+
+
   } catch (error) {
     if (error?.original?.detail) {
       // Sequelize suele anidar el error real en error.original

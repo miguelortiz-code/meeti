@@ -32,8 +32,8 @@
   <% const alerts = locals.messages[category]; %>
   <% if (alerts && alerts.length) { %>
     <% alerts.forEach(alerta => { %>
-      <div class="alerta <%= category %>">
-        <p><%= alerta %></p>
+      <div class="alertas <%= category %>">
+        <p class="alerta"><%= alerta %></p>
       </div>
     <% }) %>
   <% } %>
