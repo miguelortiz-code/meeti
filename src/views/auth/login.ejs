@@ -1,1 +1,20 @@
-<h1> <%- namePage%> </h1>
+<main class="contenedor contenedor-formularios">
+    <h1> <%- namePage%> </h1>
+    
+    <form action="/auth/login" method="POST" class="default-form">
+
+        <div class="campo">
+            <label for="email">Correo Electronico</label>
+            <input type="email" name="email" id="email" placeholder="johndoe@gmail.com">
+        </div>
+        
+        <div class="campo">
+            <label for="password">Contraseña</label>
+            <input type="password" name="password" id="password" placeholder="**********">
+        </div>
+        
+        <div class="campo enviar">
+            <input type="submit" value="Iniciar Sesión" class="btn btn-rosa">
+        </div>
+    </form>
+</main>
