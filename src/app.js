@@ -1,16 +1,11 @@
 import express from 'express';
 import expressEjsLayouts from 'express-ejs-layouts';
-import path, { dirname, join } from 'path';
 import flash from 'connect-flash';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
-import { fileURLToPath } from 'url';
 import { authRoutes } from './routes/index.routes.js';
 import {flashMiddleware} from './middleware/index.middleware.js'
 import db from './config/db.js';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const app = express();
 
@@ -42,10 +37,10 @@ const startServer = async () => {
     // EJS
     app.set('view engine', 'ejs');
     app.use(expressEjsLayouts);
-    app.set('views', join(__dirname, 'src/views'));
+    app.set('views', 'src/views');
 
     // Archivos estáticos
-    app.use(express.static(join(__dirname, 'src/public')));
+    app.use(express.static('src/public'));
 
     // Rutas
     app.use('/auth', authRoutes);

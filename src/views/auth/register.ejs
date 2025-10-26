@@ -4,12 +4,12 @@
     <form action="/auth/register" method="POST" class="default-form">
         <div class="campo">
             <label for="name">Nombre completo</label>
-            <input type="text" name="name" id="name" placeholder="John Doe">
+            <input type="text" name="name" id="name" placeholder="John Doe" value="<%= user?.name ?? '' %>">
         </div>
         
         <div class="campo">
             <label for="email">Correo Electronico</label>
-            <input type="email" name="email" id="email" placeholder="johndoe@gmail.com">
+            <input type="email" name="email" id="email" placeholder="johndoe@gmail.com"  value="<%= user?.email ?? '' %>">
         </div>
         
         <div class="campo">
