@@ -1,5 +1,5 @@
 import express from 'express';
-import {viewRegister, viewLogin, register, confirmAccount} from '../controllers/auth.controller.js';
+import {viewRegister, viewLogin, register, confirmAccount, login} from '../controllers/auth.controller.js';
 
 const router = express.Router();
 
@@ -10,6 +10,7 @@ router.get('/confirm-account/:token', confirmAccount);
 
 // ROUTER POST
 router.post('/register', register);
+router.post('/login', login)
 
 
 

@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import { authRoutes } from './routes/index.routes.js';
 import {flashMiddleware} from './middleware/index.middleware.js'
 import db from './config/db.js';
+import passport from './config/passport.js';
 
 const app = express();
 
@@ -30,6 +31,11 @@ const startServer = async () => {
       saveUninitialized: false
     }));
 
+    // Inicializar passport
+    app.use(passport.initialize());
+    app.use(passport.session());
+
+    // Alertas y flash Messages
     app.use(flash());
     app.use(flashMiddleware);
 

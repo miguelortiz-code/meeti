@@ -1,4 +1,5 @@
 import bcrypt from "bcrypt";
+import passport from 'passport';
 import { check, validationResult } from "express-validator";
 import { Users } from "../models/index.model.js";
 import { generateId, emailRegister } from "../helpers/index.helpers.js";
@@ -152,4 +153,14 @@ const confirmAccount = async (req, res) =>{
   });
 }
 
-export { viewRegister, viewLogin, register, confirmAccount };
+// Función para loguear usuario
+const login = (req, res, next) => {
+    passport.authenticate('local', {
+        successRedirect: '/dashboard',
+        failureRedirect: '/auth/login',
+        failureFlash: true,
+        badRequestMessage: 'Los campos son obligatorios'
+    })(req, res, next);
+};
+
+export { viewRegister, viewLogin, register, confirmAccount, login };
