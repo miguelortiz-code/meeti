@@ -125,4 +125,31 @@ const register = async (req, res, next) => {
   }
 };
 
-export { viewRegister, viewLogin, register };
+// Función para confirmar cuenta
+const confirmAccount = async (req, res) =>{
+  // Extaer token desde la url
+  const {token} = req.params;
+  // Buscar usuario por token
+  const user = await Users.findOne({where: {token}});
+  
+  // Validar usuario si ya existe
+  if(!user){
+    return res.render('auth/confirm',{
+      namePage: 'Error al confirmar tu cuenta',
+      message: 'La cuenta no existe o el enlace de confirmación no es válido. Intenta nuevamente',
+      error: true,
+    })
+  }
+
+  // Si todo está bien, activar usuario
+  user.token = null;
+  user.active = 1;
+  await user.save();
+  res.render('auth/confirm', {
+    namePage: 'Cuenta Confirmada',
+    message: 'Tu cuenta ha sido confirmada exitosamente. Ya puedes iniciar sesión y comenzar a crear reuniones',
+    error: false
+  });
+}
+
+export { viewRegister, viewLogin, register, confirmAccount };

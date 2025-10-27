@@ -1,0 +1,33 @@
+<main style="max-width: 600px; margin: 0 auto; padding: 40px; font-family: Arial, sans-serif;">
+
+    <h1 style="font-size: 2.5rem; margin-bottom: 20px; font-weight: 800; text-align: center;">
+        Meeti
+    </h1>
+
+    <div style="background-color: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.1); padding: 30px; border-radius: 12px;">
+
+        <h2 style="text-align: center; font-size: 1.5rem; font-weight: 800; text-transform: uppercase; margin-bottom: 20px; color: <%= error ? '#F00' : '#0A0' %>;">
+            <%= namePage %>
+        </h2>
+
+        <p style="padding: 15px; border-radius: 8px; width: 100%; text-align: center; font-weight: bold; text-transform: uppercase; color: white; background-color: <%= error ? '#F00' : '#0A0' %>;">
+            <%= message %>
+        </p>
+
+        <% if (error && namePage === 'Error al reestablecer tu contraseña') { %>
+            <a href="/auth/recover-password" style="display: inline-block; width: 100%; margin-top: 20px; text-align: center; background-color: #F00; padding: 10px; border-radius: 8px; color: #fff; text-decoration: none; font-weight: bold;">
+                Recuperar contraseña
+            </a>
+        <% } else if (error) { %>
+            <a href="/auth/register" style="display: inline-block; width: 100%; margin-top: 20px; text-align: center; background-color: #F00; padding: 10px; border-radius: 8px; color: #fff; text-decoration: none; font-weight: bold;">
+                Registrarme
+            </a>
+        <% } else { %>
+            <a href="/auth/login" style="display: inline-block; width: 100%; margin-top: 20px; text-align: center; background-color: #0A0; padding: 10px; border-radius: 8px; color: #fff; text-decoration: none; font-weight: bold;">
+                Iniciar sesión
+            </a>
+        <% } %>
+
+    </div>
+
+</main>
