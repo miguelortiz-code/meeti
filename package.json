@@ -5,7 +5,9 @@
   "main": "src/app.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/app.js --watch"
+    "dev": "nodemon src/app.js --watch",
+    "db:import": "node src/seed/seeder.js -i",
+    "db:delete": "node src/seed/seeder.js -d"
   },
   "keywords": [
     "MVC",
