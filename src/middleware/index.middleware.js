@@ -7,7 +7,7 @@ export const flashMiddleware = (req, res, next) => {
 // Validar si el usuario está autenticado
 export const isAuthenticate = (req, res, next) =>{
     // Revisar usuario
-    if(req.isAuthenticate()){
+    if(req.isAuthenticated()){
       return next(); // Usuario Autenticado
     }
 

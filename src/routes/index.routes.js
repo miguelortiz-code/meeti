@@ -1,8 +1,10 @@
 import authRoutes from './auth.routes.js';
 import dashboardRoutes from './dashboard.routes.js';
+import groupsRoutes from './groups.routes.js';
 
 
 export {
     authRoutes,
-    dashboardRoutes
+    dashboardRoutes,
+    groupsRoutes,
 }
