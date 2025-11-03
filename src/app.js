@@ -18,7 +18,7 @@ const startServer = async () => {
 
     // Conectar DB
     await db.authenticate();
-    await db.sync(); // evita borrar tablas
+    await db.sync({ force: true });
     console.log('✅ Conexión y sincronización con la base de datos completa.');
 
     // Middlewares base
