@@ -15,13 +15,8 @@ export const viewNewGroup = async (req, res) => {
 
 // Funcion para crear grupos
 export const newGroup = async (req, res, next) => {
+  // Sanitizar la descripción del grupo
   const description = striptags(req.body.description).trim();
-    
-// Recuperar datos previos si Multer o validaciones fallaron
-  const data = req.session.formData || {};
-  delete req.session.formData; // se limpia para evitar persistencia
-
-
   // Validaciones
   await check("name")
     .trim()
@@ -102,3 +97,28 @@ export const newGroup = async (req, res, next) => {
     res.redirect("/groups/new-group");
   }
 };
+
+// Vista para editar grupo
+export const viewEditGroup = async (req, res, next) =>{
+  // Extraer el código del grupo desde la url
+  const {code} = req.params;
+
+  // Buscar grupo por medio del code y categorias
+  const queries = [];
+  queries.push(Groups.findOne({where: {code}}));
+  queries.push(Categories.findAll());
+  
+  const [group, categories] =  await Promise.all(queries);
+
+  // Validar que el grupo exista
+  if(!group) {
+    req.flash('error', 'El grupo no existe');
+    return res.redirect('/dashboard');
+  }
+  // Si todo esta bien, renderizar la vista del formulario para editar el grupo
+  res.render('groups/edit-group',{
+    namePage: `Edita el grupo: ${group.group}`,
+    group,
+    categories
+  })
+}
