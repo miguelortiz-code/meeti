@@ -15,6 +15,13 @@ export const viewNewGroup = async (req, res) => {
 
 // Funcion para crear grupos
 export const newGroup = async (req, res, next) => {
+  const description = striptags(req.body.description).trim();
+    
+// Recuperar datos previos si Multer o validaciones fallaron
+  const data = req.session.formData || {};
+  delete req.session.formData; // se limpia para evitar persistencia
+
+
   // Validaciones
   await check("name")
     .trim()
@@ -25,7 +32,6 @@ export const newGroup = async (req, res, next) => {
 
   await check("description")
     .trim()
-    .escape()
     .notEmpty().withMessage("La descripción no puede ir vacía")
     .isLength({ min: 15 }).withMessage("La descripción debe tener mínimo 15 caracteres")
     .run(req);    
@@ -38,7 +44,6 @@ export const newGroup = async (req, res, next) => {
 
   await check("url")
     .trim()
-    .escape()
     .notEmpty().withMessage("La URL no puede ir vacía")
     .isURL({
       protocols: ["http", "https"],
@@ -46,6 +51,7 @@ export const newGroup = async (req, res, next) => {
     }).withMessage("La URL no es válida, asegúrate de incluir http:// o https://")
     .run(req);
 
+ 
   // Obtener los errores de validación
   const result = validationResult(req);
 
@@ -60,14 +66,19 @@ export const newGroup = async (req, res, next) => {
       namePage: "Crear Nuevo Grupo",
       categories,
       messages: req.flash(),
-      data: req.body,
+      data: req.session.formData = req.body,
     });
   }
 
   // Si no hay errores
   const { name, category: id_category, url } = req.body;
-  const description = striptags(req.body.description).trim();
   const { id: id_user } = req.user;
+
+  // Verifica si se subió una imagen
+  let image = null;
+  if (req.file) {
+    image = req.file.filename;
+  }
 
   try {
     await Groups.create({
@@ -76,6 +87,7 @@ export const newGroup = async (req, res, next) => {
       id_category,
       url,
       id_user,
+      image
     });
 
     req.flash("exito", "Grupo creado correctamente");
