@@ -1,5 +1,7 @@
 <main class="contenedor panel-administracion">
-    <h1><%= namePage %></h1>
+    <h1>
+        <%= namePage %>
+    </h1>
     <!-- NAVEGACIÓN -->
     <nav class="contenedor-botones">
         <a href="/groups/new-group" class="btn btn-amarillo">Nuevo Grupo</a>
@@ -15,7 +17,7 @@
                 <div class="informacion-admin">
                     <p class="fecha">Lunes 22 de mayo de 2025</p>
                     <h3>E-commerce México</h3>
-                    <small>23 Personas se inscribieron al evento</small> 
+                    <small>23 Personas se inscribieron al evento</small>
                 </div>
 
                 <div class="acciones contenedor-botones">
@@ -27,22 +29,26 @@
         </ul>
     </section>
 
-    <section class="section-admin">
-        <h2>Tus Grupos</h2>
-        <ul>
-            <li>
-                <div class="informacion-admin">
-                    <h3>BlockChain Guadalajara</h3>
-                </div>
+    <section class="seccion-admin">
+        <%if(groups.length) {%>
+            <h2>Tus Grupos</h2>
+            <ul>
+            <% groups.forEach(group=> { %>
+                <li>
+                    <div class="informacion-admin">
+                        <h3><%= group.group %></h3>
+                    </div>
 
-                <div class="acciones contenedor-botones">
-                    <a href="#" class="btn btn-verde">Editar</a>
-                    <a href="#" class="btn btn-azul2">Imagen</a>
-                    <a href="#" class="btn btn-rojo">Eliminar</a>
-                </div>
-            </li>
-        </ul>
+                    <div class="acciones contenedor-botones">
+                        <a href="/groups/edit-group/<%=group.code %>" class="btn btn-verde">Editar</a>
+                        <a href="/groups/image-group/<%=group.code %>" class="btn btn-azul2">Imagen</a>
+                        <a href="/groups/delete-group/<%=group.code %>" class="btn btn-rojo">Eliminar</a>
+                    </div>
+                </li>
+                <%})%>
+            </ul>
+            <%} else {%>
+                <p>No tienes grupos creados actualmente</p>
+            <%}%>
     </section>
-
-    
 </main>
