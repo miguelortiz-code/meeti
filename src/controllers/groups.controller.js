@@ -220,3 +220,23 @@ export const editGroup = async (req, res) => {
     return res.redirect(`/groups/edit/${code}`);
   }
 };
+
+// Vista para editar imagen del grupo
+export const viewImageGroup = async (req, res) =>{
+  // Extraer el código del grupo desde la url
+  const {code} = req.params;
+  // Buscar grupo mediante el código
+  const group = await Groups.findOne({where: {code}});
+
+  // Validar que el grupo exista
+  if (!group) {
+    req.flash("error", "El grupo no existe");
+    return res.redirect("/dashboard");
+  }
+
+  // Si todo está bien, renderizar la vista
+  res.render('groups/image-group', {
+    namePage: `Edita la imagen del grupo:  ${group.group}`,
+    group
+  })
+}

@@ -1,0 +1,23 @@
+<main class="contenedor contenedor-formularios">
+    <h1><%= namePage %></h1>
+    <form action="/groups/imager-group" method="POST" class="default-form" enctype="multipart/form-data">
+    
+        <div class="campo">
+            <label for="image">Imagen</label>
+            <input type="file" name="image" id="image">
+        </div>
+
+        <%if(group.image){%>
+
+        <div class="campo">
+            <label for="currentImage">Imagen Actual</label>
+            <img src="/uploads/groups/<%= group.image %>" alt="imagen de: <%=group.group%>" id="currentImage" width="500" height="300">
+        </div>
+        <%}else{%>
+            <p>No existe imagen actual. ☝ Sube una imagen para el grupo</p>
+        <%}%>
+        <div class="campo enviar">
+            <input type="submit" value="Subir Imagen" class="btn btn-rosa">
+        </div>
+    </form>
+</main>
