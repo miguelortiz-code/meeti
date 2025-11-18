@@ -277,3 +277,25 @@ export const saveImageGroup = async (req, res, next) => {
     return res.redirect("/dashboard");
   }
 };
+
+// Vista para elimiar grupos
+export const viewDeleteGroup = async (req, res, next) =>{
+  // Extraer codigo del grupo desde la url
+  const {code} = req.params;
+  // Obtener el id del usuario logueado
+  const {id} = req.user;
+  // Buscar grupo por medio del código
+  const group = await Groups.findOne({where: {code, id_user: id}});
+  // Validar que el grupo exista
+  if (!group) {
+    req.flash("error", "No existe el grupo seleccionado");
+    res.redirect("/dashboard");
+    return next();
+  }
+  
+  // Si todo está bien, renderizar la vista
+  res.render('groups/delete-group', {
+    namePage: `Eliminar grupo: ${group.group}`,
+    group,
+  })
+}

@@ -1,5 +1,5 @@
 import express from 'express';
-import {viewNewGroup, newGroup, viewEditGroup, editGroup, viewImageGroup, saveImageGroup} from '../controllers/groups.controller.js';
+import {viewNewGroup, newGroup, viewEditGroup, editGroup, viewImageGroup, saveImageGroup, viewDeleteGroup} from '../controllers/groups.controller.js';
 import {isAuthenticate, noCache, multerErrorHandler, updateImage} from '../middleware/index.middleware.js';
 import { uploadTo } from '../config/multer.js';
 
@@ -9,6 +9,7 @@ const  router = express.Router();
 router.get('/new-group', isAuthenticate, noCache, viewNewGroup);
 router.get('/edit-group/:code', isAuthenticate, noCache, viewEditGroup);
 router.get('/image-group/:code', isAuthenticate, noCache, viewImageGroup);
+router.get('/delete-group/:code',isAuthenticate, noCache, viewDeleteGroup)
 //Routas POST
 router.post('/new-group', isAuthenticate, noCache, uploadTo('groups').single('image'), multerErrorHandler(), newGroup);
 router.post('/edit-group/:code', isAuthenticate, noCache, editGroup);
