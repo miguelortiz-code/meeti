@@ -224,11 +224,11 @@ export const editGroup = async (req, res) => {
 };
 
 // Vista para editar imagen del grupo
-export const viewImageGroup = async (req, res) =>{
+export const viewImageGroup = async (req, res) => {
   // Extraer el código del grupo desde la url
-  const {code} = req.params;
+  const { code } = req.params;
   // Buscar grupo mediante el código
-  const group = await Groups.findOne({where: {code}});
+  const group = await Groups.findOne({ where: { code } });
 
   // Validar que el grupo exista
   if (!group) {
@@ -237,11 +237,11 @@ export const viewImageGroup = async (req, res) =>{
   }
 
   // Si todo está bien, renderizar la vista
-  res.render('groups/image-group', {
+  res.render("groups/image-group", {
     namePage: `Edita la imagen del grupo:  ${group.group}`,
-    group
-  })
-}
+    group,
+  });
+};
 
 // Funcion para almacenar y editar imagen de grupo
 export const saveImageGroup = async (req, res, next) => {
@@ -279,23 +279,72 @@ export const saveImageGroup = async (req, res, next) => {
 };
 
 // Vista para elimiar grupos
-export const viewDeleteGroup = async (req, res, next) =>{
+export const viewDeleteGroup = async (req, res, next) => {
   // Extraer codigo del grupo desde la url
-  const {code} = req.params;
+  const { code } = req.params;
   // Obtener el id del usuario logueado
-  const {id} = req.user;
+  const { id } = req.user;
   // Buscar grupo por medio del código
-  const group = await Groups.findOne({where: {code, id_user: id}});
+  const group = await Groups.findOne({ where: { code, id_user: id } });
   // Validar que el grupo exista
   if (!group) {
     req.flash("error", "No existe el grupo seleccionado");
     res.redirect("/dashboard");
     return next();
   }
-  
+
   // Si todo está bien, renderizar la vista
-  res.render('groups/delete-group', {
+  res.render("groups/delete-group", {
     namePage: `Eliminar grupo: ${group.group}`,
     group,
-  })
-}
+  });
+};
+
+// Función para eliminar grupo
+export const deleteGroup = async (req, res) => {
+  try {
+    const { code } = req.params;
+    const { id } = req.user;
+
+    // Buscar grupo por medio del código y validar dueño
+    const group = await Groups.findOne({ where: { code, id_user: id } });
+
+    if (!group) {
+      req.flash("error", "No existe el grupo seleccionado");
+      return res.redirect("/dashboard");
+    }
+
+    // 📌 Si existe una imagen asociada → eliminarla
+    if (group.image) {
+      const oldImagePath = path.join(
+        import.meta.dirname,
+        "..",
+        "public",
+        "uploads",
+        "groups",
+        group.image
+      );
+
+      try {
+        await fs.promises.unlink(oldImagePath);
+      } catch (err) {
+        // ⚠ Ignorar si el archivo no existe
+        if (err.code !== "ENOENT") {
+          console.error("⚠ Error eliminando imagen:", err);
+        }
+      }
+    }
+
+    // 📌 Eliminar grupo
+    await group.destroy(); // ⬅ Mejor que Groups.destroy(), garantiza borrar solo ese registro
+
+    // 📌 Redireccionar
+    req.flash("exito", "Grupo eliminado correctamente");
+    return res.redirect("/dashboard");
+
+  } catch (error) {
+    console.error("❌ Error eliminando grupo:", error);
+    req.flash("error", "Hubo un error eliminando el grupo", error);
+    return res.redirect("/dashboard");
+  }
+};
