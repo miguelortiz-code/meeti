@@ -3,7 +3,7 @@ import expressEjsLayouts from 'express-ejs-layouts';
 import flash from 'connect-flash';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
-import { authRoutes, dashboardRoutes, groupsRoutes } from './routes/index.routes.js';
+import { authRoutes, dashboardRoutes, groupsRoutes, meetiRoutes } from './routes/index.routes.js';
 import {flashMiddleware} from './middleware/index.middleware.js'
 import db from './config/db.js';
 import passport from './config/passport.js';
@@ -52,6 +52,7 @@ const startServer = async () => {
     app.use('/auth', authRoutes);
     app.use('/', dashboardRoutes);
     app.use('/groups', groupsRoutes);
+    app.use('/meeties',meetiRoutes);
 
     // Servidor
     app.listen(process.env.PORT, () => {
