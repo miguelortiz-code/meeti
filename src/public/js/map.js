@@ -30,8 +30,19 @@
           if (error) {
             console.log(error);
           }
+          completeInputs(result);
           marker.bindPopup(result.address.LongLabel);
         });
     });
   });
 })();
+
+function completeInputs(result){
+  document.getElementById('pais').value = result.address.CntryName || '';
+  document.getElementById('ciudad').value = result.address.City || '' ;
+  document.getElementById('postal').value = result.address.Postal || '' ;
+  document.getElementById('direccion').value = result.address.Address || '' ;
+  document.getElementById('Neighborhood').value = result.address.Neighborhood || '';
+  document.getElementById('lat').value = result.latlng.lat || '';
+  document.getElementById('lng').value = result.latlng.lng || '';
+}
