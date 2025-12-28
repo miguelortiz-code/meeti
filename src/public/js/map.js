@@ -8,4 +8,11 @@
     attribution:
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
+
+  // Pin o marker
+  marker = new L.marker([lat, lng], {
+    draggable: true,
+    autoPan: true
+  })
+  .addTo(map)
 })();
