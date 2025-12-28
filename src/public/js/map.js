@@ -15,4 +15,11 @@
     autoPan: true
   })
   .addTo(map)
+
+  // Detectar el movimiento del marker
+  marker.on('moveend', function(e){
+    marker = e.target;
+    const  position =  marker.getLatLng();
+    map.panTo(new L.LatLng(position.lat, position.lng));
+  })
 })();
