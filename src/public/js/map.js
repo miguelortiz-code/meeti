@@ -38,11 +38,11 @@
 })();
 
 function completeInputs(result){
-  document.getElementById('pais').value = result.address.CntryName || '';
-  document.getElementById('ciudad').value = result.address.City || '' ;
-  document.getElementById('postal').value = result.address.Postal || '' ;
-  document.getElementById('direccion').value = result.address.Address || '' ;
-  document.getElementById('Neighborhood').value = result.address.Neighborhood || '';
+  document.getElementById('country').value = result.address.CntryName || '';
+  document.getElementById('city').value = result.address.City || '' ;
+  document.getElementById('zip_code').value = result.address.Postal || '' ;
+  document.getElementById('address').value = result.address.Address || '' ;
+  document.getElementById('neighborhood').value = result.address.Neighborhood || '';
   document.getElementById('lat').value = result.latlng.lat || '';
   document.getElementById('lng').value = result.latlng.lng || '';
 }

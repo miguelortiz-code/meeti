@@ -1,12 +1,13 @@
 import express from 'express';
-import {viewNewMeeti} from '../controllers/meeties.controller.js';
+import {viewNewMeeti, newMeetie} from '../controllers/meeties.controller.js';
 import {isAuthenticate, noCache} from '../middleware/index.middleware.js';
 const router = express.Router();
 
 // ROUTER GET
 router.get('/new-meeti', isAuthenticate, noCache, viewNewMeeti);
 
-
+// ROUTER POST
+router.post('/new-meeti', isAuthenticate, noCache, newMeetie);
 
 
 export default router
