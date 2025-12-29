@@ -139,4 +139,36 @@ export const newMeetie = async (req, res, next) => {
   } else {
     quota = Number(quota);
   }
+
+  // Slug del meeti
+  const url = slug(title).toLowerCase();
+  const slugMeeti = `${url}-${shortid.generate()}`;
+
+  // Almacenar en la BD
+  try {
+    await Meeties.create({
+      id_group: grupoId,
+      slug: slugMeeti,
+      title,
+      guest,
+      date,
+      hour,
+      description,
+      country,
+      city,
+      zip_code,
+      address,
+      neighborhood,
+      latitude,
+      longitude,
+      id_user,
+    });
+
+    req.flash('exito', 'Meeti creado correctamente');
+    res.redirect('/dashboard')
+  } catch (error) {
+    console.log(error);
+    req.flash("error", error);
+    res.redirect("/meeties/new-meeti");
+  }
 };
