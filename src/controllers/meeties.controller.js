@@ -43,7 +43,7 @@ export const newMeetie = async (req, res, next) => {
   .escape()
   .run(req)
 
-  await check('date')
+  await check('event_date')
   .trim()
   .escape()
   .notEmpty()
@@ -132,7 +132,7 @@ export const newMeetie = async (req, res, next) => {
   // Si no hay errores
   let quota = req.body.quota;
   const { id: id_user } = req.user;
-  const { grupoId, title, guest, date, hour, country, city, zip_code, address, neighborhood, latitude, longitude} = req.body;
+  const { grupoId, title, guest, event_date, hour, country, city, zip_code, address, neighborhood, latitude, longitude} = req.body;
   // Cupo
   if (!quota || quota === "") {
     quota = 0;
@@ -151,7 +151,7 @@ export const newMeetie = async (req, res, next) => {
       slug: slugMeeti,
       title,
       guest,
-      date,
+      event_date,
       hour,
       description,
       country,

@@ -32,7 +32,7 @@ const  Meeties = db.define('meeties', {
         allowNull: false
     },
 
-    date: {
+    event_date: {
         type: DataTypes.DATEONLY,
         allowNull: false,
     },
