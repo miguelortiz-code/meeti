@@ -172,3 +172,28 @@ export const newMeetie = async (req, res, next) => {
     res.redirect("/meeties/new-meeti");
   }
 };
+
+// Vista para mostrar el formulario de edicion
+export const viewEditMeeit = async(req, res, next) =>{
+  // Extraer el código del Meeti desde la url
+  const {code} = req.params;
+  console.log(code);
+  // consulta Multiple
+  const queries = [];
+  queries.push(Groups.findAll({where: {id_user: req.user.id}}));
+  queries.push(Meeties.findOne(code))
+  const  [groups, meeti] = await Promise.all(queries);
+
+  if(!groups || !meeti){
+    req.flash('error', 'Operación no valida');
+    res.redirect('/dashboard');
+    next();
+  }
+
+  // Mostrar vista
+  res.render('meeties/edit-meeti', {
+    namePage: `Editar Meeti: ${meeti.title} `,
+    groups,
+    meeti
+  })
+}
