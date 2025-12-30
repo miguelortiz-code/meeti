@@ -18,7 +18,9 @@
             <% meeties.forEach(meeti =>{ %>
             <li>
                 <div class="informacion-admin">
-                    <p class="fecha"><%= meeti.date %></p>
+                    <% moment.locale('es'); %>
+                    <% const date = meeti.date + ' ' + meeti.hour; %>
+                    <p class="fecha"><%= moment(date).format('LLLL') %> Horas</p>
                     <h3><%= meeti.title %></h3>
                     <small><%= meeti.interesteds.length %> Personas inscritas</small>
                 </div>

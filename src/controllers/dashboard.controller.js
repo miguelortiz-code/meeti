@@ -1,3 +1,4 @@
+import moment from 'moment';
 import {Groups, Meeties} from '../models/index.model.js';
 
 export const viewDashboard = async (req, res) =>{
@@ -18,6 +19,7 @@ export const viewDashboard = async (req, res) =>{
     res.render('admin/home',{
         namePage: 'Panel Administrativo',
         groups,
-        meeties
+        meeties,
+        moment
     })
 }
