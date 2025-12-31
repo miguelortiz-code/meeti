@@ -88,15 +88,8 @@
                 value="<%= meeti.neighborhood%>">
         </div>
 
-        <div class="campo">
-            <label>Latitud</label>
-            <input type="text" id="lat" name="latitude" readonly="readonly" value="<%= meeti.latitude %>">
-        </div>
-        
-        <div class="campo">
-            <label>Longtitud</label>
-            <input type="text" id="lng" name="longitude" readonly="readonly" value="<%= meeti.longitude %>">
-        </div>
+        <input type="hidden" id="lat" name="latitude" readonly="readonly" value="<%= meeti.latitude %>">
+        <input type="hidden" id="lng" name="longitude" readonly="readonly" value="<%= meeti.longitude %>">
 
         <div class="campo enviar">
             <input type="submit" class="btn btn-rosa" value="Guardar Cambios">
