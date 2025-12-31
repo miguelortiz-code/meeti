@@ -1,0 +1,105 @@
+<main class="contenedor contenedor-formularios">
+    <h1><%- namePage %></h1>
+    <form class="default-form" method="POST">
+        <legend>Sobre el Meeti</legend>
+        <div class="campo">
+            <label>Grupo</label>
+            <select name="grupoId">
+                <option value="" disabled selected>-- Selecciona Grupo --</option>
+                <% if(groups.length> 0){%>
+                    <%groups.forEach(group=> {%>
+                        <option <%=(meeti.id_group===group.id ? 'selected' : '' )%> value="<%= group.id%>"> <%=
+                                    group.group%>
+                        </option>
+                        <%})%>
+                            <%}%>
+            </select>
+        </div>
+        <div class="campo">
+            <label>Titulo</label>
+            <input type="text" name="titulo" value="<%= meeti.title%>">
+        </div>
+        <div class="campo">
+            <label>Invitado</label>
+            <input type="text" name="invitado" value="<%= meeti.guest%>">
+        </div>
+        <div class="columnas-2 grid">
+            <div class="campo">
+                <label>Fecha</label>
+                <input type="date" name="fecha" value="<%= meeti.event_date %>">
+            </div>
+            <div class="campo">
+                <label>Hora</label>
+                <input type="time" name="hora" value="<%= meeti.hour%>">
+            </div>
+        </div>
+        <div class="campo">
+            <label>Cupo</label>
+            <input type="number" min="1" name="cupo" value="<%= meeti.quota %>">
+        </div>
+        <div class="campo descripcion">
+            <label>Descripción</label>
+            <div class="contenedor-editor">
+                <input type="hidden" id="x" name="descripcion" value="<%= meeti.description %>">
+                <trix-editor input="x"></trix-editor>
+            </div>
+        </div>
+
+        <legend>Ubicación Meeti</legend>
+
+        <div class="campo buscador">
+            <label>Coloca la Dirección del Meeti</label>
+            <div class="contenedor-input">
+                <input type="text" id="formbuscador" placeholder="Ubicación">
+                <small>El asistente colocará una dirección estimada</small>
+            </div>
+        </div>
+
+        <div class="campo mapa">
+            <div id="mapa"></div>
+            <p class="informacion">Mueve el Pin hacia el punto en caso de ser necesario</p>
+        </div>
+
+        <p class="informacion">Confirma que los siguientes campos sean correctos:</p>
+
+        <div class="campo">
+            <label>País</label>
+            <input type="text" id="country" name="country" placeholder="País" value="<%= meeti.country%>">
+        </div>
+
+        <div class="campo">
+            <label>Ciudad</label>
+            <input type="text" id="city" name="city" placeholder="Ciudad" value="<%= meeti.city%>">
+        </div>
+
+        <div class="campo">
+            <label>Código Postal</label>
+            <input type="text" id="zip_code" name="zip_code" placeholder="código postal" value="<%= meeti.zip_code%>">
+        </div>
+
+        <div class="campo">
+            <label>Dirección</label>
+            <input type="text" id="address" name="address" placeholder="Dirección" value="<%= meeti.address%>">
+        </div>
+
+        <div class="campo">
+            <label>Nombre Barrio</label>
+            <input type="text" id="neighborhood" name="neighborhood" placeholder="Nombre del barrio"
+                value="<%= meeti.neighborhood%>">
+        </div>
+
+        <div class="campo">
+            <label>Latitud</label>
+            <input type="text" id="lat" name="latitude" readonly="readonly" value="<%= meeti.latitude %>">
+        </div>
+        
+        <div class="campo">
+            <label>Longtitud</label>
+            <input type="text" id="lng" name="longitude" readonly="readonly" value="<%= meeti.longitude %>">
+        </div>
+
+        <div class="campo enviar">
+            <input type="submit" class="btn btn-rosa" value="Guardar Cambios">
+        </div>
+    </form>
+</main>

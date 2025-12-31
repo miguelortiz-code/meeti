@@ -177,11 +177,10 @@ export const newMeetie = async (req, res, next) => {
 export const viewEditMeeit = async(req, res, next) =>{
   // Extraer el código del Meeti desde la url
   const {code} = req.params;
-  console.log(code);
   // consulta Multiple
   const queries = [];
   queries.push(Groups.findAll({where: {id_user: req.user.id}}));
-  queries.push(Meeties.findOne(code))
+  queries.push(Meeties.findOne({where: {code}}))
   const  [groups, meeti] = await Promise.all(queries);
 
   if(!groups || !meeti){
