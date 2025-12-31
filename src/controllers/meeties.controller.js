@@ -2,7 +2,7 @@ import striptags from "striptags";
 import slug from "slug";
 import shortid from "shortid";
 import {check, validationResult} from 'express-validator';
-import { Groups, Meeties } from "../models/index.model.js";
+import { Groups, Meeties} from "../models/index.model.js";
 
 // Mostrar la vista del meeti
 export const viewNewMeeti = async (req, res) => {
@@ -196,3 +196,72 @@ export const viewEditMeeit = async(req, res, next) =>{
     meeti
   })
 }
+
+// Función para editar Meeti´s
+export const editMeeti = async (req, res) => {
+  const { code } = req.params; // Extaer código del meeti mediante la url
+  
+  const meeti = await Meeties.findOne({where: {code}}); // buscar meeti mediante el código
+
+  if (!meeti) {
+    req.flash('error', 'No existe Meeti para editar');
+    return res.redirect('/dashboard');
+  }
+
+  if (meeti.id_user !== req.user.id) {
+    req.flash('error', 'No tienes permisos para editar este Meeti');
+    return res.redirect('/dashboard');
+  }
+
+  let { quota } = req.body;
+  if (quota === '') quota = 0;
+
+  const description = striptags(req.body.description || '').trim();
+
+  const {
+    grupoId,
+    title,
+    guest,
+    event_date,
+    hour,
+    country,
+    city,
+    zip_code,
+    address,
+    neighborhood,
+    latitude,
+    longitude
+  } = req.body;
+
+  if (title !== meeti.title) {
+    meeti.slug = `${slug(title).toLowerCase()}-${shortid.generate()}`;
+  }
+  // Almacenar en la base de datos
+  try {
+    await meeti.update({
+      id_group: grupoId,
+      slug: meeti.slug,
+      title,
+      guest,
+      event_date,
+      hour,
+      quota,
+      description,
+      country,
+      city,
+      zip_code,
+      address,
+      neighborhood,
+      latitude,
+      longitude
+    });
+    // Redireccionar la usuario
+    req.flash('exito', 'Meeti editado correctamente');
+    res.redirect('/dashboard');
+
+  } catch (error) {
+    console.error(error);
+    req.flash('error', 'Error al editar el Meeti');
+    res.redirect(`/meeties/edit-meeti/${code}`);
+  }
+};

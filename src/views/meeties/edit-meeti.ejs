@@ -17,30 +17,30 @@
         </div>
         <div class="campo">
             <label>Titulo</label>
-            <input type="text" name="titulo" value="<%= meeti.title%>">
+            <input type="text" name="title" value="<%= meeti.title%>">
         </div>
         <div class="campo">
             <label>Invitado</label>
-            <input type="text" name="invitado" value="<%= meeti.guest%>">
+            <input type="text" name="guest" value="<%= meeti.guest%>">
         </div>
         <div class="columnas-2 grid">
             <div class="campo">
                 <label>Fecha</label>
-                <input type="date" name="fecha" value="<%= meeti.event_date %>">
+                <input type="date" name="event_date" value="<%= meeti.event_date %>">
             </div>
             <div class="campo">
                 <label>Hora</label>
-                <input type="time" name="hora" value="<%= meeti.hour%>">
+                <input type="time" name="hour" value="<%= meeti.hour%>">
             </div>
         </div>
         <div class="campo">
             <label>Cupo</label>
-            <input type="number" min="1" name="cupo" value="<%= meeti.quota %>">
+            <input type="number" name="quota" value="<%= meeti.quota %>">
         </div>
         <div class="campo descripcion">
             <label>Descripción</label>
             <div class="contenedor-editor">
-                <input type="hidden" id="x" name="descripcion" value="<%= meeti.description %>">
+                <input type="hidden" id="x" name="description" value="<%= meeti.description %>">
                 <trix-editor input="x"></trix-editor>
             </div>
         </div>
