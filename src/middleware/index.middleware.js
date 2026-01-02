@@ -102,3 +102,20 @@ export const updateImage = (folder) => {
     }
   };
 };
+
+/**
+ * Middleware para validar el código UUID
+ */
+export const validateUUID = (req, res, next) => {
+  const { code } = req.params;
+
+  const uuidRegex =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+  if (!uuidRegex.test(code)) {
+    req.flash('error', 'Código de Meeti inválido');
+    return res.redirect('/dashboard');
+  }
+
+  next();
+};
