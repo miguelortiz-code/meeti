@@ -277,3 +277,25 @@ export const viewDeleteMeeti =  async(req, res, next) =>{
     meeti
   });
 }
+
+// Función para Eliminar Meeti´s
+export const deleteMeeti = async (req, res) =>{
+  try {
+    const { code } = req.params;
+    const { id } = req.user;
+
+    // Buscar Meeti por medio del código y validar dueño
+    const meeti = await Meeties.findOne({ where: { code, id_user: id } });
+   
+    // 📌 Eliminar grupo
+    await meeti.destroy();
+
+    // 📌 Redireccionar
+    req.flash("exito", "Meeti eliminado correctamente");
+    return res.redirect("/dashboard");
+  } catch (error) {
+    console.error("❌ Error eliminando Meeti:", error);
+    req.flash("error", "Hubo un error eliminando el Meeti", error);
+    return res.redirect("/dashboard");
+  }
+}
