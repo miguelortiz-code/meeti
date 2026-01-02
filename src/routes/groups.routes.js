@@ -7,9 +7,9 @@ const  router = express.Router();
 
 // Rutas GET
 router.get('/new-group', isAuthenticate, noCache, viewNewGroup);
-router.get('/edit-group/:code', isAuthenticate, noCache, viewEditGroup);
+router.get('/edit-group/:code', isAuthenticate, noCache, validateUUID, viewEditGroup);
 router.get('/image-group/:code', isAuthenticate, noCache, viewImageGroup);
-router.get('/delete-group/:code',isAuthenticate, noCache, viewDeleteGroup)
+router.get('/delete-group/:code',isAuthenticate, noCache, validateUUID, viewDeleteGroup)
 //Routas POST
 router.post('/new-group', isAuthenticate, noCache, uploadTo('groups').single('image'), multerErrorHandler(), newGroup);
 router.post('/edit-group/:code', isAuthenticate, noCache,validateUUID, editGroup);
