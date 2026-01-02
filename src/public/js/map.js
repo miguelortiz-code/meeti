@@ -1,72 +1,58 @@
 (function () {
-  const lat = document.getElementById("lat").value || 4.651002988522;
-  const lng = document.getElementById("lng").value || -74.081282901615;
-  const address = document.getElementById("address").value || "";
+  const latInput = document.getElementById("lat");
+  const lngInput = document.getElementById("lng");
+  const addressInput = document.getElementById("address");
+
+  const lat = latInput?.value ? parseFloat(latInput.value) : 4.651002988522;
+  const lng = lngInput?.value ? parseFloat(lngInput.value) : -74.081282901615;
+  const address = addressInput?.value || "";
+
   const map = L.map("mapa").setView([lat, lng], 12);
+
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution:
+      '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+  }).addTo(map);
+
+  const geocodeService = L.esri.Geocoding.geocodeService();
+
+  // Un solo contenedor de markers
+  const markers = L.featureGroup().addTo(map);
+
   let marker;
-  const geocodeService = L.esri.Geocoding.geocodeService(); // Utilizar provider y Geocoder
 
-  // En la vista de edición
-  if (lat && lng) {
-    marker = new L.marker([lat, lng], {
-      draggable: true,
-      autoPan: true,
-    })
-      .addTo(map)
-      .bindPopup(address)
-      .openPopup();
+  // Función reutilizable para crear/actualizar el marker
+  const createMarker = (lat, lng) => {
+    markers.clearLayers();
 
-    // Detectar el movimiento del marker
-    marker.on("moveend", function (e) {
-      marker = e.target;
-      const position = marker.getLatLng();
-      map.panTo(new L.LatLng(position.lat, position.lng));
-
-      // Obtener la información de la calles al soltar el pin
-      geocodeService
-        .reverse()
-        .latlng(position, 13)
-        .run(function (error, result) {
-          if (error) {
-            console.log(error);
-          }
-          completeInputs(result);
-          marker.bindPopup(result.address.LongLabel);
-        });
-    });
-  }
-
-
-  document.addEventListener("DOMContentLoaded", () => {
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
-    // Pin o marker
-    marker = new L.marker([lat, lng], {
+    marker = L.marker([lat, lng], {
       draggable: true,
       autoPan: true,
     }).addTo(map);
 
-    // Detectar el movimiento del marker
+    marker.bindPopup(address).openPopup();
+    markers.addLayer(marker);
+
+    // Detectar movimiento
     marker.on("moveend", function (e) {
-      marker = e.target;
+      marker = e.target; 
       const position = marker.getLatLng();
       map.panTo(new L.LatLng(position.lat, position.lng));
 
-      // Obtener la información de la calles al soltar el pin
       geocodeService
         .reverse()
         .latlng(position, 13)
         .run(function (error, result) {
-          if (error) {
-            console.log(error);
-          }
+          if (error) return console.error(error);
+
           completeInputs(result);
           marker.bindPopup(result.address.LongLabel);
         });
     });
-  });
+  };
+
+  // Crear marker inicial (edición o nuevo)
+  createMarker(lat, lng, address);
 })();
 
 function completeInputs(result) {
