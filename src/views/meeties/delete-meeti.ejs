@@ -1,0 +1,9 @@
+<main class="contenedor contenedor-formularios">
+    <h1><%= namePage %></h1>
+    <form action="/meeties/delete-meeti/<%=meeti.code %>" method="POST" class="default-form">
+        <legend>¿Deseas eliminar este meeti? Un meeti eliminado no se puede recuperar</legend>
+        <div class="campo enviar">
+            <input type="submit" value="Confirmar Eliminación" class="btn btn-rosa">
+        </div>
+    </form>
+</main>

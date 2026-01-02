@@ -265,3 +265,15 @@ export const editMeeti = async (req, res) => {
     res.redirect(`/meeties/edit-meeti/${code}`);
   }
 };
+
+// Vista para eliminar Meeti
+export const viewDeleteMeeti =  async(req, res, next) =>{
+  const {code} = req.params; // Obtener código desde la url
+
+  const meeti = await Meeties.findOne({where: {code, id_user: req.user.id}});
+  
+  res.render('meeties/delete-meeti', {
+    namePage: `Eliminar Meeti: ${meeti.title}`,
+    meeti
+  });
+}
