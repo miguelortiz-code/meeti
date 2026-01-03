@@ -1,4 +1,4 @@
-import {DataTypes} from 'sequelize';
+import {DataTypes, UUIDV4} from 'sequelize';
 import db from '../config/db.js';
 
 const Users = db.define('users',{
@@ -8,10 +8,19 @@ const Users = db.define('users',{
         autoIncrement: true
     },
 
+    code: {
+        type: DataTypes.UUID,
+        defaultValue: UUIDV4,
+        allowNull: false,
+    },
+
     name: {
         type: DataTypes.STRING(80),
         allowNull: false,
     },
+
+    description: DataTypes.TEXT,
+    
     email: {
         type: DataTypes.STRING(50),
         allowNull: false,
