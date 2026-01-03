@@ -17,7 +17,7 @@ export const viewProfile = async (req, res )=>{
 // Función para editar perfil
 export const profile = async (req, res ) =>{
     const{code} = req.params; // Extaer codigo del usuario desde la url
-    const user = await Users.findOne({where: {code}}); // Buscar usuario mediante el código
+    const user = await Users.findOne({where: {code}}); // Buscar usuario por el code
 
     // Validaciones 
     await check('name')
@@ -62,4 +62,19 @@ export const profile = async (req, res ) =>{
     // extaer información del formulario
     const description = striptags(req.body.description).trim();
     const {name, email } = req.body;
+
+    try {
+      await user.update({
+        name,
+        description,
+        email
+      });
+      // Redireccionar la usuario
+    req.flash('exito', 'Perfil editado correctamente');
+    res.redirect('/dashboard');
+    } catch (error) {
+          console.error(error);
+    req.flash('error', 'Error al editar perfil');
+    res.redirect(`/settings/${code}`);
+    }
 }

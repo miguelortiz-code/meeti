@@ -3,14 +3,13 @@ import moment from 'moment';
 import {Groups, Meeties, Users} from '../models/index.model.js';
 
 export const viewDashboard = async (req, res) =>{
-    const {code} = req.params;
 
     // Consulta multiple
     const queries = [];
     queries.push( Groups.findAll({ where: { id_user: req.user.id}, order: [['group', 'ASC']]}))
     queries.push (Meeties.findAll({where: {id_user: req.user.id, event_date: { [Op.gte]: moment().format('YYYY-MM-DD')}}, order: [['title', 'ASC']]}))
     queries.push (Meeties.findAll({where: {id_user: req.user.id, event_date: { [Op.lt]: moment().format('YYYY-MM-DD')}}, order: [['title', 'ASC']]}))
-    queries.push(Users.findOne({where:code}));
+    queries.push(Users.findOne({where: {id: req.user.id}}));
     
     // Ejecutar queries de manera simultanea
     const [groups, meeties, previousMeetings, user] = await Promise.all(queries);
