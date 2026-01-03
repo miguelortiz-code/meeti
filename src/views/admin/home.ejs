@@ -6,8 +6,8 @@
     <nav class="contenedor-botones">
         <a href="/groups/new-group" class="btn btn-amarillo">Nuevo Grupo</a>
         <a href="/meeties/new-meeti" class="btn btn-azul">Nueva reunion</a>
-        <a href="/settings/profile" class="btn btn-rosa">Mi perfil</a>
-        <a href="/settings/image-profile" class="btn btn-amarillo">Imagen Perfil</a>
+        <a href="/settings/<%=user.code%>" class="btn btn-rosa">Mi perfil</a>
+        <a href="/settings/<%=user.code%>/image-profile" class="btn btn-amarillo">Imagen Perfil</a>
     </nav>
     <!-- EVENTOS -->
     <section class="seccion-admin">
@@ -39,8 +39,8 @@
     </section>
 
     <section class="seccion-admin">
+        <h2>Tus Grupos</h2>
         <%if(groups.length) {%>
-            <h2>Tus Grupos</h2>
             <ul>
             <% groups.forEach(group=> { %>
                 <li>

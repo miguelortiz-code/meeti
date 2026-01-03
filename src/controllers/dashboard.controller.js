@@ -1,16 +1,19 @@
 import { Op } from 'sequelize';
 import moment from 'moment';
-import {Groups, Meeties} from '../models/index.model.js';
+import {Groups, Meeties, Users} from '../models/index.model.js';
 
 export const viewDashboard = async (req, res) =>{
+    const {code} = req.params;
+
     // Consulta multiple
     const queries = [];
     queries.push( Groups.findAll({ where: { id_user: req.user.id}, order: [['group', 'ASC']]}))
     queries.push (Meeties.findAll({where: {id_user: req.user.id, event_date: { [Op.gte]: moment().format('YYYY-MM-DD')}}, order: [['title', 'ASC']]}))
     queries.push (Meeties.findAll({where: {id_user: req.user.id, event_date: { [Op.lt]: moment().format('YYYY-MM-DD')}}, order: [['title', 'ASC']]}))
+    queries.push(Users.findOne({where:code}));
     
     // Ejecutar queries de manera simultanea
-    const [groups, meeties, previousMeetings] = await Promise.all(queries);
+    const [groups, meeties, previousMeetings, user] = await Promise.all(queries);
     
     /* Obtener todos los grupos || Una sola consulta 
         const groups = await Groups.findAll({where: {id_user: req.user.id},  order: [['group', 'ASC']]}); 
@@ -22,6 +25,7 @@ export const viewDashboard = async (req, res) =>{
         groups,
         meeties,
         moment,
-        previousMeetings
+        previousMeetings,
+        user
     })
 }
