@@ -4,18 +4,18 @@
     <form class="default-form" action="/settings/<%=user.code%>/profile" method="POST">
         <div class="campo">
             <label>Nombre</label>
-            <input type="text" name="name" value ="<%= user.name%>">
+            <input type="text" name="name" value ="<%= data?.name || user.name || '' %>">
         </div>
         <div class="campo descripcion">
             <label>Quien soy</label>
             <div class="contenedor-editor">
-                <input type="hidden" id="x" name="description" value="<%= user.description%>">
+                <input type="hidden" id="x" name="description" value="<%= data?.description || user.description || '' %>">
                 <trix-editor input="x"></trix-editor>
             </div>
         </div>
         <div class="campo">
             <label>E-mail</label>
-            <input type="email" name="email" value ="<%= user.email%>" >
+            <input type="email" name="email" value ="<%= data?.email || user.email || ''%>" >
         </div>
         <div class="campo enviar">
             <input type="submit" class="btn btn-rosa" value="Guardar Cambios">
