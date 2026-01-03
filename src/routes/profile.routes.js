@@ -6,7 +6,7 @@ const router = express.Router();
 
 
 // Router GET
-router.get('/profile', isAuthenticate, noCache, viewProfile);
+router.get('/:code', isAuthenticate, noCache, viewProfile);
 
 //Router POST
 
