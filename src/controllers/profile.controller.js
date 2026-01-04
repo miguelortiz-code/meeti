@@ -126,3 +126,14 @@ export const changePassword = async(req, res) =>{
     res.redirect('/auth/login');
   });
 }
+
+// Vista para editar la imagen de perfil
+export const viewImageProfile =  async(req, res) =>{
+  const {code} =  req.params;
+  const user = await Users.findOne({where: {code}});
+
+  res.render('profile/edit-image', {
+    namePage: 'Edita la imagen de perfil',
+    user
+  })
+}

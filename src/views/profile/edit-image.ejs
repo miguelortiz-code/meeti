@@ -1,0 +1,23 @@
+<main class="contenedor contenedor-formularios">
+    <h1><%= namePage %></h1>
+    <form action="/settings/image-profile/<%= user.code %>" method="POST" class="default-form" enctype="multipart/form-data">
+        <legend>Sube la imagen que se mostrará junto a tu nombre y biografía</legend>
+        <div class="campo">
+            <label for="image">Imagen</label>
+            <input type="file" name="image" id="image">
+        </div>
+
+        <%if(user.image){%>
+
+        <div class="campo">
+            <label for="currentImage">Imagen Actual</label>
+            <img src="/uploads/profiles/<%= group.image %>" alt="imagen de: <%=user.image%>" id="currentImage" width="500" height="300">
+        </div>
+        <%}else{%>
+            <p>No existe imagen actual. ☝ Sube una imagen para tu pefil </p>
+        <%}%>
+        <div class="campo enviar">
+            <input type="submit" value="Subir Imagen" class="btn btn-rosa">
+        </div>
+    </form>
+</main>
