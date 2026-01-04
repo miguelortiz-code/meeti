@@ -78,3 +78,14 @@ export const profile = async (req, res ) =>{
     res.redirect(`/settings/${code}`);
     }
 }
+
+export const viewChangePassword = async (req, res) =>{
+  const{code} = req.params;
+
+  const user = await Users.findOne({where: {code}});
+
+  res.render('profile/change-password', {
+    namePage: 'Cambia tu contaseña',
+    user
+  })
+}
