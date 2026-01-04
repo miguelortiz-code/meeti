@@ -1,4 +1,5 @@
 import striptags from "striptags";
+import bcrypt from 'bcrypt'
 import {Users} from '../models/index.model.js';
 import { check, validationResult } from "express-validator";
 
@@ -88,4 +89,40 @@ export const viewChangePassword = async (req, res) =>{
     namePage: 'Cambia tu contaseña',
     user
   })
+}
+
+// Función para cambiar la contaseña
+export const changePassword = async(req, res) =>{
+  const {code} = req.params;
+  const user = await Users.findOne({where: {code, id: req.user.id}});
+  const {beforePassword, newPassword} = req.body; 
+  // Verificar el password anterior
+  const checkPassword = await bcrypt.compare(beforePassword, user.password);
+  if(!checkPassword){
+  return res.render('profile/change-password', {
+    namePage: 'Cambia tu contaseña',
+    user,
+    messages: {
+      error: ['La contraseña actual es incorrecta']
+    }
+  })
+ }
+
+  // si el password anterior es correcto, hasear el nuevo password
+ const passwordHaseado = await bcrypt.hash(newPassword, 10);
+  // Asingar el nuevo password
+  user.password = passwordHaseado;
+  // Guardar en la base de datos
+  await user.save();
+
+  // Cerrar sesión después del cambio de contraseña
+  req.logout(err => {
+    if (err) {
+      return next(err);
+  }
+  // Mensaje de exito
+  req.flash('exito', 'La contraseña ha sido cambiada de manera correcta. Inicia sesión nuevamente con tu nueva contraseña.');
+   // Redireccionar al login
+    res.redirect('/auth/login');
+  });
 }
