@@ -163,4 +163,18 @@ const login = (req, res, next) => {
     })(req, res, next);
 };
 
-export { viewRegister, viewLogin, register, confirmAccount, login };
+const logout = (req, res) =>{
+  // Cerrar sesión después del cambio de contraseña
+  req.logout(err => {
+    if (err) {
+      return next(err);
+  }
+  // Mensaje de exito
+  req.flash('exito', 'Cerraste sesión correctamente');
+  // Redireccionar al login
+  res.redirect('/auth/login');
+  });
+}
+
+
+export { viewRegister, viewLogin, register, confirmAccount, login, logout };
