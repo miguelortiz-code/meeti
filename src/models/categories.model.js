@@ -10,7 +10,12 @@ const Categories = db.define('category', {
 
     category: {
         type: DataTypes.STRING
-    }
+    },
+
+    slug:{
+        type: DataTypes.STRING,
+        allowNull: false
+    },
 },{
   timestamps: true, //  crea automáticamente createdAt y updatedAt
   createdAt: 'created_At',

@@ -9,9 +9,9 @@
         <form action="#">
             <select name="categoria">
                     <option value="" disabled selected>-- Selecciona Categoría --</option>
-                    <option value="programacion">Programación</option>
-                    <option value="diseno">Diseño</option>
-                    <option value="libros">Libros</option>
+                    <%categories.forEach(category =>{%>
+                        <option value="<%=category.id%>"><%=category.category%></option>
+                    <%})%>
             </select>
             <input type="text" name="nombre" placeholder="Nombre Meeti">
             <input type="text" name="ciudad" placeholder="Ciudad">
