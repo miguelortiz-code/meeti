@@ -12,6 +12,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&family=Staatliches&display=swap" rel="stylesheet">
+    <!--FONT AWENSOME -->
+    <script src="https://kit.fontawesome.com/cf9fd5b80a.js" crossorigin="anonymous"></script>
     <!-- TITLE-->
     <title>Meeti - <%- namePage %> </title>
 </head>
@@ -22,10 +24,12 @@
             <img src="/img/logo.png" alt="Logo meeti">
         </a>
 
-        <nav class="nav">
-            <a href="#">Crear Grupo</a>
-            <a href="/auth/login">Iniciar Sesion</a>
-            <a href="/auth/register">Crear Cuenta</a>
+        <nav class="menu">
+          <% if (locals.user && locals.user.id) { %>
+            <%- include('partials/nav-authenticated') %>
+          <% } else { %>
+            <%- include('partials/nav-not-authenticated') %>
+          <% } %>
         </nav>
     </header>
 
