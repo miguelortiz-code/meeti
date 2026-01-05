@@ -137,3 +137,32 @@ export const viewImageProfile =  async(req, res) =>{
     user
   })
 }
+
+export const saveImageProfile = async(req, res, next ) =>{
+  const {code} = req.params;
+  const {id} = req.user;
+  try {
+    //📌 Paso 1: obtener user
+    const user = await Users.findOne({where: {code, id: id}});
+
+    // DEBUGGING -> Validar que exista una imagen anterior
+    // if(group.image){
+    //   console.log(group.image);
+    // }
+
+    // DEBUGGING -> Verificar si estan subiendo una imagen nueva
+    // if(req.file){
+    //   console.log(req.file.filename);
+    // }
+
+    //📌 Paso 2: Crear el req.record para que el siguiente middleware lo use
+    req.record = user;
+    //📌 Paso 4: Pasar al siguiente Middleware updateImage()
+    return next();
+
+  } catch (error) {
+    console.error("❌ Error en saveImageGroup:", error);
+    req.flash("error", "Hubo un error procesando la imagen");
+    return res.redirect("/dashboard");
+  }
+}

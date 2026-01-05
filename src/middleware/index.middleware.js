@@ -91,7 +91,7 @@ export const updateImage = (folder) => {
 
       // 📌 Paso 5: Finalizar el flujo con éxito
       req.updateFinished = true;
-      req.flash("exito", "Imagen del grupo se ha actualizado correctamente");
+      req.flash("exito", "La imagen se ha actualizado correctamente");
       return res.redirect("/dashboard");
 
     } catch (error) {
