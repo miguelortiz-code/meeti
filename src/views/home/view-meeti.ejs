@@ -1,24 +1,28 @@
 <section class="encabezado-evento">
     <div class="contenedor">
         <div class="resumen-evento">
-            <h1>Nombre Evento</h1>
+            <h1><%= meeti.title %></h1>
             <div class="info-autor">
                 <figure class="imagen">
-                    <img src="" alt="">
+                <% if(meeti.user.image){%>
+                    <img src="/uploads/profiles/<%=meeti.user.image%>" alt="Imagen de <%=meeti.user.name %>">
+                <%}%>
                 </figure>
                 <div class="informacion">
                     <p>Organizador por: </p>
                     <p class="autor">
-                        <a href="">Miguel</a> Creador de:
-                        <a href="">Node Colombia</a>
+                        <a href="/user/<%= meeti.user.code %>"><%= meeti.user.name%></a> Creador de:
+                        <a href="/group/<%= meeti.group.code %>"><%= meeti.group.group %></a>
                     </p>
                 </div>
             </div> <!-- Info autor-->
         </div> <!--Resumen Evento-->
         
         <div class="pregunta-asistencia">
+            <%if(user){%>
             <p>¿Asistirás?</p>
             <a href="#" class="btn btn-azul">Si Asistire</a>
+            <%}%>
         </div>
     </div>
 </section>
@@ -28,15 +32,15 @@
     <div class="contenedor">
         <div class="informacion-evento">
             <div class="descripcion">
-                <!-- Imagen del Meeti -->
+                <img src="/uploads/groups/<%=meeti.group.image%>" alt="Imagen del grupo <%= meeti.group.group%>">
                 
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam eligendi ad odio ratione quidem sapiente suscipit laborum repudiandae optio nesciunt enim magni assumenda, id unde voluptates doloribus, culpa reiciendis eius.</p>
+                <p><%=meeti.description %></p>
             </div>
             <!-- Asistentes -->
             <div class="asistentes">
                 <div class="titulo">
-                    <h3>Asistentes</h3>
-                    <a href="#">Ver Todos</a>
+                    <h3><%= meeti.interesteds.length%>  Asistentes</h3>
+                    <a href="/assistants/<%=meeti.slug%>">Ver Todos</a>
                 </div>
             </div>
             <!-- Commentarios -->
@@ -77,10 +81,12 @@
         </div>
         <aside class="información">
             <div class="fecha">
-                <p>30 de Agosto de 2019, 20:30 horas</p>
+                <% moment.locale ('es'); %>
+                <%const date = meeti.event_date + ' ' + meeti.hour; %>
+                <p><%= moment(date).format('LLLL')%> Horas </p>
             </div>
             <div class="ubicacion">
-                <p>Avenida Siempre Viva</p>
+                <p> <%= meeti.city%>, <%= meeti.neighborhood %>, <%= meeti.address%> </p>
             </div>
         </aside>
     </div>

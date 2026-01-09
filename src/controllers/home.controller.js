@@ -51,7 +51,7 @@ export const viewMeetiForSlug = async (req, res) =>{
       },
       {
         model: Users,
-        attributes: ['id', 'name', 'image']
+        attributes: ['id', 'name', 'image', 'code']
       }
     ]
   });
@@ -64,7 +64,9 @@ export const viewMeetiForSlug = async (req, res) =>{
   // Pasar el  resultado hacia la vista
   res.render('home/view-meeti', {
     namePage: meeti.title,
-    meeti
+    meeti,
+    moment,
+    user: req.user || null 
   } )
   
 }
