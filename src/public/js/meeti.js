@@ -1,4 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
+  
+  if (!document.body.classList.contains('auth')) {
+  return;
+}
+  
   if (document.getElementById('ubicacion-meeti')) {
     showMap()
   }
