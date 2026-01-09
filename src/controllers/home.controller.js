@@ -40,3 +40,31 @@ export const home = async (req, res) => {
     moment
   });
 };
+
+export const viewMeetiForSlug = async (req, res) =>{
+  const {slug} = req.params; // Extraer SLug del Meeti por medio de la url
+
+  const meeti  = await Meeties.findOne({where: {slug}, 
+    include: [
+      {
+        model: Groups
+      },
+      {
+        model: Users,
+        attributes: ['id', 'name', 'image']
+      }
+    ]
+  });
+
+  // Si no existe meeti
+  if(!meeti){
+    res.redirect('/');
+  }
+
+  // Pasar el  resultado hacia la vista
+  res.render('home/view-meeti', {
+    namePage: meeti.title,
+    meeti
+  } )
+  
+}
