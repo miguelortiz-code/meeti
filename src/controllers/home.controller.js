@@ -37,7 +37,7 @@ export const home = async (req, res) => {
     namePage: "Inicio",
     categories,
     meeties,
-    moment
+    moment,
   });
 };
 
