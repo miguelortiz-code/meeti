@@ -1,6 +1,6 @@
 import { Categories, Meeties, Groups, Users } from "../models/index.model.js";
 import moment from "moment";
-import { Op } from "sequelize";
+import { Op, Sequelize } from "sequelize";
 
 export const home = async (req, res) => {
   const queries = [];
@@ -73,5 +73,26 @@ export const viewMeetiForSlug = async (req, res) =>{
 
 // Función para confirmar asistencia de la reuncion
 export const confirmAttendance = async (req, res) =>{
-  
+ const { code } = req.params;
+
+  const meeti = await Meeties.findOne({ where: { code } });
+
+  if (!meeti) {
+    return res.status(404).json({ message: 'Meeti no encontrado' });
+  }
+
+  // Evitar duplicados
+  if (meeti.interesteds.includes(req.user.id)) {
+    return res.status(400).json({ message: 'Ya estás registrado' });
+  }
+
+  await meeti.update({
+    interesteds: Sequelize.fn(
+      'array_append',
+      Sequelize.col('interesteds'),
+      req.user.id
+    )
+  });
+
+  res.send('Has confirmado asisitencia');
 }
