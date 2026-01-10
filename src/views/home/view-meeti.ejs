@@ -20,8 +20,12 @@
         
         <div class="pregunta-asistencia">
             <%if(user){%>
-            <p>¿Asistirás?</p>
-            <a href="#" class="btn btn-azul">Si Asistire</a>
+                <form action="/confirm-attendance/<%=meeti.code%>" id="confirm_attendance">
+                    <p>¿Asistirás?</p>
+                    <input type="submit" value="Confirmar Asistencia" class="btn btn-azul">
+                </form>
+            <%} else{%>
+                <p>Inicia sesión para confirmar tu asistencia</p>
             <%}%>
         </div>
     </div>

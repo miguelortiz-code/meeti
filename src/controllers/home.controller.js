@@ -70,3 +70,8 @@ export const viewMeetiForSlug = async (req, res) =>{
   } )
   
 }
+
+// Función para confirmar asistencia de la reuncion
+export const confirmAttendance = async (req, res) =>{
+  
+}

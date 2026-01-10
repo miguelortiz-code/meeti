@@ -1,3 +1,5 @@
+import attendance from './attendance.js';
+
 (function () {
   const latInput = document.getElementById("lat");
   const lngInput = document.getElementById("lng");
