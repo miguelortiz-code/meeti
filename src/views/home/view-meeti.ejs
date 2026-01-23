@@ -20,10 +20,17 @@
         
         <div class="pregunta-asistencia">
             <%if(user){%>
+                <% const exist = meeti.interesteds?.includes(user.id); %>
                 <form action="/confirm-attendance/<%= meeti.code%>" method="post" id="confirm_attendance">
                     <p>¿Asistirás?</p>
-                    <input type="hidden" id="inputAction" value="confirm" name="inputAction">
-                    <input type="submit" value="Confirmar Asistencia" id="attendance" class="btn btn-azul">
+                    <% if(exist){%>
+                        <input type="hidden" id="inputAction" value="cancel" name="inputAction">
+                        <input type="submit" value="Cancelar Asistencia" id="attendance" class="btn btn-rojo">
+                    <%} else{%>                            
+                        <input type="hidden" id="inputAction" value="confirm" name="inputAction">
+                        <input type="submit" value="Confirmar Asistencia" id="attendance" class="btn btn-azul">
+                    <%}%>
+                    <div id="mensaje"></div>
                 </form>
             <%} else{%>
                 <p>Inicia sesión para confirmar tu asistencia</p>

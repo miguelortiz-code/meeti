@@ -12,6 +12,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const btn = document.getElementById('attendance');
     let inputAction =  document.getElementById('inputAction').value;
+    const message = document.getElementById('mensaje');
+
+    // Limpia la respuesta previa
+    while(message.firstChild){
+      message.removeChild(message.firstChild)
+    }
+
+    // Obtener el valor de cancel o confirm en el hidden
+
+
+
 
     const data = {
       inputAction
@@ -32,6 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
           btn.classList.remove('btn-rojo');
           btn.classList.add('btn-azul');
         }
+        // Mostrar Mensaje
+        message.appendChild(document.createTextNode(response.data));
       })
   }
 });
