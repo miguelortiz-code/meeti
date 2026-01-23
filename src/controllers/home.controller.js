@@ -81,18 +81,38 @@ export const confirmAttendance = async (req, res) =>{
     return res.status(404).json({ message: 'Meeti no encontrado' });
   }
 
-  // Evitar duplicados
-  if (meeti.interesteds.includes(req.user.id)) {
-    return res.status(400).json({ message: 'Ya estás registrado' });
+const { inputAction } = req.body;
+
+  if (inputAction === 'confirm') {
+
+    // Evitar duplicados SOLO al confirmar
+    if (meeti.interesteds.includes(req.user.id)) {
+      return res.status(400).json({ message: 'Ya estás registrado' });
+    }
+
+    await meeti.update({
+      interesteds: Sequelize.fn(
+        'array_append',
+        Sequelize.col('interesteds'),
+        req.user.id
+      )
+    });
+
+    return res.send('Has confirmado tu asistencia');
+
+  } else {
+
+    // Cancelar asistencia
+    if (meeti.interesteds.includes(req.user.id)) {
+      await meeti.update({
+        interesteds: Sequelize.fn(
+          'array_remove',
+          Sequelize.col('interesteds'),
+          req.user.id
+        )
+      });
+    }
+
+    return res.send('Has cancelado tu asistencia');
   }
-
-  await meeti.update({
-    interesteds: Sequelize.fn(
-      'array_append',
-      Sequelize.col('interesteds'),
-      req.user.id
-    )
-  });
-
-  res.send('Has confirmado asisitencia');
 }

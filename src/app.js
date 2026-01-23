@@ -39,6 +39,10 @@ const startServer = async () => {
     app.use(flash());
     app.use(flashMiddleware);
 
+   // Habilitar cuerpo del formulario
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
+
 
     // EJS
     app.set('view engine', 'ejs');

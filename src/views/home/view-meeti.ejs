@@ -20,9 +20,10 @@
         
         <div class="pregunta-asistencia">
             <%if(user){%>
-                <form action="/confirm-attendance/<%=meeti.code%>" id="confirm_attendance">
+                <form action="/confirm-attendance/<%= meeti.code%>" method="post" id="confirm_attendance">
                     <p>¿Asistirás?</p>
-                    <input type="submit" value="Confirmar Asistencia" class="btn btn-azul">
+                    <input type="hidden" id="inputAction" value="confirm" name="inputAction">
+                    <input type="submit" value="Confirmar Asistencia" id="attendance" class="btn btn-azul">
                 </form>
             <%} else{%>
                 <p>Inicia sesión para confirmar tu asistencia</p>
