@@ -116,3 +116,23 @@ const { inputAction } = req.body;
     return res.send('Has cancelado tu asistencia');
   }
 }
+
+// Vista para mostar el listado de asistentes
+export const viewAssistants = async(req, res) =>{
+  const {slug} = req.params; // Extraer slug desde la url
+  // Consultar Meeti mediante el slug
+  const meeti = await Meeties.findOne({where: {slug}, attributes: ['interesteds', 'title', 'slug']});
+  // Extraer interesados
+  const {interesteds} = meeti
+  const assistants = await Users.findAll({  
+    attributes: ['name', 'image'],
+    where: {id: interesteds}
+  })
+  
+  // Mostrar vista
+  res.render('home/view-assistants', {
+    namePage: 'Listado de asistentes de la reunión',
+    assistants,
+    meeti
+  })
+}

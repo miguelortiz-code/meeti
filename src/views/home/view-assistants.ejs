@@ -1,0 +1,23 @@
+<main class="contenedor asistentes">
+    <h1><%= namePage %> <a href="/meeti/<%= meeti.slug %>"><%= meeti.title%></a> </h1>
+
+    <% if (assistants.length > 0){ %>
+    <ul class="listado-asistentes">
+        <% assistants.forEach(assistant =>{%>
+            <li>
+                <div class="imagen">
+                    <%if(assistant.image){%>
+                        <img src="/uploads/profiles/<%= assistant.image %>" alt="Imagen de: <%= assistant.name %>">
+                    <%}%>
+                </div>
+
+                <div class="texto">               
+                    <%= assistant.name %>
+                </div>
+            </li>
+        <%})%>
+    </ul>
+    <%} else{%>
+        <p class="no-asistentes">No hay asistentes registrados</p>
+    <%}%>
+</main>
