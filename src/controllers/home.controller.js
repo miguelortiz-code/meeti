@@ -71,7 +71,7 @@ export const viewMeetiForSlug = async (req, res) =>{
   
 }
 
-// Función para confirmar asistencia de la reuncion
+// Función para confirmar asistencia de la reunión
 export const confirmAttendance = async (req, res) =>{
  const { code } = req.params;
 
@@ -137,6 +137,7 @@ export const viewAssistants = async(req, res) =>{
   })
 }
 
+// Vista para mostrar la información del usuario
 export const viewUsers = async (req, res, next) =>{
   const {code} = req.params;
 
@@ -160,3 +161,31 @@ export const viewUsers = async (req, res, next) =>{
     groups
   })
 }
+
+// Vista para mostrar grupo individual
+export const viewGroup = async (req, res, next) => {
+  const { code } = req.params;
+
+  // Buscar el grupo
+  const group = await Groups.findOne({ where: { code } });
+
+  // Si no existe el grupo
+  if (!group) {
+    res.redirect('/');
+    return next();
+  }
+
+  // Buscar los meetis del grupo
+  const meeties = await Meeties.findAll({
+    where: { id_group: group.id },
+    order: [['event_date', 'ASC']]
+  });
+
+  // Renderizar vista
+  res.render('home/view-group', {
+    namePage: `Información del grupo ${group.group}`,
+    group,
+    meeties,
+    moment
+  });
+};
