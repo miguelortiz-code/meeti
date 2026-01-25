@@ -136,3 +136,27 @@ export const viewAssistants = async(req, res) =>{
     meeti
   })
 }
+
+export const viewUsers = async (req, res, next) =>{
+  const {code} = req.params;
+
+  // consultas al mismo tiempo
+  const queries = [];
+
+  queries.push(Users.findOne({where: {code}}))
+  queries.push(Groups.findAll({where: {id_user: req.user.id}}));
+  const [user, groups] = await Promise.all(queries);
+
+  // Si no existe usuario
+  if(!user){
+    res.redirect('/');
+    return next();
+  }
+  
+  // Mostrar vista
+  res.render('home/view-user',{
+    namePage: `Perfil del usuario ${user.name}`,
+    user,
+    groups
+  })
+}
