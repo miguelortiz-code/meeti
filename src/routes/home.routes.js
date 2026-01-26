@@ -1,5 +1,5 @@
 import express from 'express';
-import {home, viewMeetiForSlug, confirmAttendance, viewAssistants, viewUsers, viewGroup} from '../controllers/home.controller.js';
+import {home, viewMeetiForSlug, confirmAttendance, viewAssistants, viewUsers, viewGroup, viewMeetiForCategory} from '../controllers/home.controller.js';
 import {isAuthenticate} from '../middleware/index.middleware.js';
 
 const router = express.Router();
@@ -10,6 +10,7 @@ router.get('/meeti/:slug', viewMeetiForSlug)
 router.get('/assistants/:slug', isAuthenticate, viewAssistants);
 router.get('/user/:code', isAuthenticate, viewUsers);
 router.get('/group/:code', isAuthenticate, viewGroup);
+router.get('/categoria/:slug', viewMeetiForCategory);
 // Router POST
 router.post('/confirm-attendance/:code', isAuthenticate, confirmAttendance);
 

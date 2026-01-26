@@ -189,3 +189,28 @@ export const viewGroup = async (req, res, next) => {
     moment
   });
 };
+
+// Vista para mostrar los meeti´s por categoria
+export const viewMeetiForCategory =  async (req, res) =>{
+  const {slug} = req.params;
+  const category = await Categories.findOne( {attributes: ['id', 'category'],  where: {slug}});
+  const meeties = await Meeties.findAll({
+  include: 
+    [
+      {
+       model: Groups,
+       where: {id_category: category.id}
+      },
+      {
+       model: Users
+      },
+    ]
+  });
+
+  res.render('home/category', {
+    namePage: `Categoria:  ${category.category}`,
+    meeties,
+    moment
+  })
+
+}
