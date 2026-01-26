@@ -1,64 +1,40 @@
 <div class="contenedor proximos-eventos">
     <h1><%= namePage %></h1>
+    <% if(meeties.length > 0){%>
     <div class="grid columnas-md-3 ">
+        <% meeties.forEach(meeti =>{%>
         <div class="card">
-            <img src="/img/imagen1.jpg">
+            <%if(meeti.group.image){%>
+                <img src="/uploads/groups/<%=meeti.group.image %>" alt="Imagen del grupo <%= meeti.group.group %>">
+            <%} else{%>
+                <img src="/img/logo.png" alt="Logo meeti">
+            <%}%>
             <div class="card-texto">
-                <p class="fecha">Jueves 30 De Diciembre de 2019</p>
+                <% moment.locale('es'); %>
+                <%const date = meeti.event_date + ' ' + meeti.hour;%>
+
+                <p class="fecha"><%= moment(date).format('LLLL'); %> Horas </p>
                 <a href="#">
-                    <h3>Desarrollo y Aceleración de Negocios</h3>
+                    <h3><%= meeti.title %> </h3>
                 </a>
                 <div class="info-autor">
                     <div class="imagen">
-
+                        <% if(meeti.user.image){%>
+                            <img src="/uploads/profiles/<%=meeti.user.image%>" alt="Imagen del creador <%= meeti.user.name %>">
+                        <%}%>
                     </div>
                     <div class="informacion">
                         <p>Organizado por:</p>
-                        <p class="autor">Juan Pablo De la torre Valdez</p>
+                        <p class="autor"><%= meeti.user.name %></p>
                     </div>
                 </div>
 
             </div>
         </div>
-
-        <div class="card">
-            <img src="/img/imagen2.jpg">
-            <div class="card-texto">
-                <p class="fecha">Jueves 30 De Diciembre de 2019<</p>
-                <a href="#">
-                    <h3>Desarrollo y Aceleración de Negocios</h3>
-                </a>
-                <div class="info-autor">
-                    <div class="imagen">
-                        
-                    </div>
-                    <div class="informacion">
-                        <p>Organizado por:</p>
-                        <p class="autor">Juan Pablo De la torre Valdez</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="card">
-            <img src="/img/imagen3.jpg">
-            <div class="card-texto">
-                <p class="fecha">Jueves 30 De Diciembre de 2019</p>
-                <a href="#">
-                    <h3>3 Tipos de Pizza</h3>
-                </a>
-                <div class="info-autor">
-                    <div class="imagen">
-                        
-                    </div>
-                    <div class="informacion">
-                        <p>Organizado por:</p>
-                        <p class="autor">Juan Pablo De la torre Valdez</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
+        <%})%>
     </div>
+    <%} else{%>
+        <p>No hay meeti's en este categoria </p>
+        <a href="/" class="btn btn-rosa">Volver al inicio</a>
+    <%}%>
 </div>
