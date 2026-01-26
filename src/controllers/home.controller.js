@@ -195,6 +195,7 @@ export const viewMeetiForCategory =  async (req, res) =>{
   const {slug} = req.params;
   const category = await Categories.findOne( {attributes: ['id', 'category'],  where: {slug}});
   const meeties = await Meeties.findAll({
+  order: [['event_date', 'ASC'], ['hour', 'ASC']],
   include: 
     [
       {

@@ -14,7 +14,7 @@
                 <%const date = meeti.event_date + ' ' + meeti.hour;%>
 
                 <p class="fecha"><%= moment(date).format('LLLL'); %> Horas </p>
-                <a href="#">
+                <a href="/meeti/<%=meeti.slug %>">
                     <h3><%= meeti.title %> </h3>
                 </a>
                 <div class="info-autor">
