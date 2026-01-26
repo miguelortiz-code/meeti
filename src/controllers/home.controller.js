@@ -1,4 +1,4 @@
-import { Categories, Meeties, Groups, Users } from "../models/index.model.js";
+import { Categories, Meeties, Groups, Users, Comments } from "../models/index.model.js";
 import moment from "moment";
 import { Op, Sequelize } from "sequelize";
 
@@ -214,4 +214,24 @@ export const viewMeetiForCategory =  async (req, res) =>{
     moment
   })
 
+}
+
+// Función para guardar el comentario
+export const comments = async (req, res, next) =>{
+  // Obtener el comentario del formulario
+  const {comment} = req.body;
+
+  // console.log(comment);
+  
+  // Almacenar el comentario en la BD
+  await Comments.create({
+    message: comment,
+    id_user : req.user.id,
+    id_meeti : req.params.id
+  })
+
+  // Redireccionar a la misma página
+  const redirectPath = req.get("referer") || fallbackPath;
+  res.redirect(redirectPath);
+  next();
 }
