@@ -60,14 +60,25 @@ export const viewMeetiForSlug = async (req, res) =>{
   if(!meeti){
     res.redirect('/');
   }
+  // Si existe Meeti consultar el comentario asociado
+  const comments = await Comments.findAll({
+    where: {id_meeti  : meeti.id},
+    include: [
+      {
+        model: Users,
+        attributes: ['id', 'name', 'image', 'code']
+      }
+    ]
+  });
 
   // Pasar el  resultado hacia la vista
   res.render('home/view-meeti', {
     namePage: meeti.title,
     meeti,
     moment,
-    user: req.user || null 
-  } )
+    user: req.user || null,
+    comments
+  })
   
 }
 

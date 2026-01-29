@@ -57,22 +57,28 @@
             </div>
             <!-- Commentarios -->
             <h2>Comentarios</h2>
-            <div class="comentario">
-                <figure class="imagen"></figure>
-                <div class="texto">
-                    <p>Hola</p>
-                    <p>Escrito por: <span>Miguel Ortiz</span></p>
-                    <input type="button" value="Eliminar" class="btn btn-azul">
+            <%if(comments.length > 0) {%>
+                <% comments.forEach(comment => {%>
+                <div class="comentario">
+                    <figure class="imagen">
+                        <%if(comment.user.image){%>
+                            <img src="/uploads/profiles/<%=comment.user.image %>" alt="Imagen de <%=comment.user.name %>">
+                        <%}%>
+                    </figure>
+                    <div class="texto">
+                        <p> <%= comment.message %> </p>
+                        <p>Escrito por: 
+                            <a href="/user/<%= comment.user.code %>">
+                                <%= comment.user.name %>
+                            </a>  
+                        </p>
+                        <input type="button" value="Eliminar" class="btn btn-azul">
+                    </div>
                 </div>
-            </div>
-
-            <div class="comentario">
-                <figure class="imagen"></figure>
-                <div class="texto">
-                    <p>Hola</p>
-                    <p>Escrito por: <span>Miguel Ortiz</span></p>
-                </div>
-            </div>
+                <%})%>
+            <%} else{%>
+                <p>No hay comentarios disponibles para este Metti   </p>
+            <%}%>
 
             <%if(user){%>
             <!-- Formulario Comentarios -->
