@@ -44,7 +44,11 @@
     <div class="contenedor">
         <div class="informacion-evento">
             <div class="descripcion">
-                <img src="/uploads/groups/<%=meeti.group.image%>" alt="Imagen del grupo <%= meeti.group.group%>">
+                <% if (meeti.group.image) { %>
+                <img  src="/uploads/groups/<%= meeti.group.image %>" alt="Imagen del grupo <%= meeti.group.group %>" onerror="this.src='/img/logo.png'">
+                <% } else { %>
+                <img src="/img/logo.png" alt="Logo Meeti">
+                <% } %>
                 
                 <p><%=meeti.description %></p>
             </div>
@@ -74,8 +78,8 @@
                         </p>
                         <% if(comment.id_user === user.id){%>
                             <form action="/delete-comment" method="post" class="eliminar-comentario">
-                                <input type="hidden" name="idComment" value="<%= comment.id%>">
-                                <input type="button" value="Eliminar" class="btn btn-azul">
+                                <input type="hidden" name="idComment" value="<%= comment.id %>">
+                                <input type="submit" value="Eliminar" class="btn btn-azul">
                             </form>
                         <%}%>
                     </div>

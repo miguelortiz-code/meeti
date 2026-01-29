@@ -14,5 +14,5 @@ router.get('/categoria/:slug', viewMeetiForCategory);
 // Router POST
 router.post('/confirm-attendance/:code', isAuthenticate, confirmAttendance);
 router.post('/meeti/:id', isAuthenticate, comments);
-router.post('delete-comment', deleteComment);
+router.post('/delete-comment', deleteComment);
 export default router

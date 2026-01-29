@@ -3,8 +3,8 @@ import expressEjsLayouts from 'express-ejs-layouts';
 import flash from 'connect-flash';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
-import { authRoutes, dashboardRoutes, groupsRoutes, meetiRoutes, profileRoutes, homeRoutes } from './routes/index.routes.js';
-import {flashMiddleware} from './middleware/index.middleware.js'
+import { authRoutes, dashboardRoutes,groupsRoutes,meetiRoutes,profileRoutes, homeRoutes} from './routes/index.routes.js';
+import { flashMiddleware } from './middleware/index.middleware.js';
 import db from './config/db.js';
 import passport from './config/passport.js';
 
@@ -16,53 +16,73 @@ const startServer = async () => {
       throw new Error('Faltan variables de entorno: PORT o URL_BACK');
     }
 
-    // Conectar DB
+    // =========================
+    // Base de datos
+    // =========================
     await db.authenticate();
     await db.sync({ alter: true });
     console.log('✅ Conexión y sincronización con la base de datos completa.');
 
+    // =========================
     // Middlewares base
+    // =========================
+    app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(cookieParser());
-    app.use(session({
-      secret: process.env.SECRET,
-      key: process.env.KEY,
-      resave: false,
-      saveUninitialized: false
-    }));
 
-    // Inicializar passport
+    // =========================
+    // Archivos estáticos (PRIMERO)
+    // =========================
+    app.use(express.static('src/public'));
+
+    // =========================
+    // Sesión
+    // =========================
+    app.use(
+      session({
+        secret: process.env.SECRET,
+        key: process.env.KEY,
+        resave: false,
+        saveUninitialized: false
+      })
+    );
+
+    // =========================
+    // Passport
+    // =========================
     app.use(passport.initialize());
     app.use(passport.session());
 
-    // Alertas y flash Messages
+    // =========================
+    // Flash messages
+    // =========================
     app.use(flash());
     app.use(flashMiddleware);
 
-   // Habilitar cuerpo del formulario
-    app.use(express.json());
-    app.use(express.urlencoded({ extended: true }));
-
-
-    // EJS
+    // =========================
+    // EJS + Layouts
+    // =========================
     app.set('view engine', 'ejs');
-    app.use(expressEjsLayouts);
     app.set('views', 'src/views');
+    app.use(expressEjsLayouts);
 
-    // Archivos estáticos
-    app.use(express.static('src/public'));
-
+    // =========================
     // Rutas
+    // =========================
     app.use('/auth', authRoutes);
     app.use('/', dashboardRoutes);
     app.use('/groups', groupsRoutes);
-    app.use('/meeties',meetiRoutes);
+    app.use('/meeties', meetiRoutes);
     app.use('/settings', profileRoutes);
     app.use('/', homeRoutes);
 
+    // =========================
     // Servidor
+    // =========================
     app.listen(process.env.PORT, () => {
-      console.log(`🚀 Servidor corriendo en: ${process.env.URL_BACK}:${process.env.PORT}`);
+      console.log(
+        `🚀 Servidor corriendo en: ${process.env.URL_BACK}:${process.env.PORT}`
+      );
     });
 
   } catch (error) {

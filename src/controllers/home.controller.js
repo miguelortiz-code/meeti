@@ -248,5 +248,5 @@ export const comments = async (req, res, next) =>{
 }
 
 export const deleteComment = async (req, res) =>{
-  
+  res.send('Se elimino mensaje ...'); 
 }
