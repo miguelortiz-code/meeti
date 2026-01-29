@@ -246,3 +246,7 @@ export const comments = async (req, res, next) =>{
   res.redirect(redirectPath);
   next();
 }
+
+export const deleteComment = async (req, res) =>{
+  
+}

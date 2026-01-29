@@ -1,5 +1,5 @@
 import express from 'express';
-import {home, viewMeetiForSlug, confirmAttendance, viewAssistants, viewUsers, viewGroup, viewMeetiForCategory, comments} from '../controllers/home.controller.js';
+import {home, viewMeetiForSlug, confirmAttendance, viewAssistants, viewUsers, viewGroup, viewMeetiForCategory, comments, deleteComment} from '../controllers/home.controller.js';
 import {isAuthenticate} from '../middleware/index.middleware.js';
 
 const router = express.Router();
@@ -14,4 +14,5 @@ router.get('/categoria/:slug', viewMeetiForCategory);
 // Router POST
 router.post('/confirm-attendance/:code', isAuthenticate, confirmAttendance);
 router.post('/meeti/:id', isAuthenticate, comments);
+router.post('delete-comment', deleteComment);
 export default router

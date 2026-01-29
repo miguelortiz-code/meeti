@@ -72,7 +72,12 @@
                                 <%= comment.user.name %>
                             </a>  
                         </p>
-                        <input type="button" value="Eliminar" class="btn btn-azul">
+                        <% if(comment.id_user === user.id){%>
+                            <form action="/delete-comment" method="post" class="eliminar-comentario">
+                                <input type="hidden" name="idComment" value="<%= comment.id%>">
+                                <input type="button" value="Eliminar" class="btn btn-azul">
+                            </form>
+                        <%}%>
                     </div>
                 </div>
                 <%})%>

@@ -1,4 +1,5 @@
 import attendance from './attendance.js';
+import  deleteComment from './deleteComment.js'
 
 (function () {
   const latInput = document.getElementById("lat");
