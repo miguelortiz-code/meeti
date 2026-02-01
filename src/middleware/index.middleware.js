@@ -19,6 +19,13 @@ export const isAuthenticate = (req, res, next) => {
   res.redirect("/auth/login");
 };
 
+// Usuario disponible en todas las vistas
+export const userMiddleware = (req, res, next) => {
+  res.locals.user = req.user || null;
+  next();
+};
+
+
 // Eliminar Cache del navegador
 export const noCache = (req, res, next) => {
   res.set("Cache-Control", "no-store, no-cache, must-revalidate, private");

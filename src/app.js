@@ -4,7 +4,7 @@ import flash from 'connect-flash';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import { authRoutes, dashboardRoutes,groupsRoutes,meetiRoutes,profileRoutes, homeRoutes} from './routes/index.routes.js';
-import { flashMiddleware } from './middleware/index.middleware.js';
+import { flashMiddleware, userMiddleware } from './middleware/index.middleware.js';
 import db from './config/db.js';
 import passport from './config/passport.js';
 
@@ -57,6 +57,7 @@ const startServer = async () => {
     // Flash messages
     // =========================
     app.use(flash());
+    app.use(userMiddleware);
     app.use(flashMiddleware);
 
     // =========================
