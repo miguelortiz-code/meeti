@@ -255,7 +255,7 @@ export const deleteComment = async (req, res) =>{
   const comment = await Comments.findOne({where: {id: commentId}});
   // Verificar si el comentario existe
   if(!comment){
-    res.send('Acción no valida');
+    res.status(404).send('Acción no válida');
     return next();
   }
 
@@ -265,7 +265,7 @@ export const deleteComment = async (req, res) =>{
     res.status(200).send('Eliminado correctamente');
     return next();
   }else{
-    res.send('No eres el autor, ¡tramposo!');
+    res.status(403).send('Acción no válida');
     return next();
   }
 }

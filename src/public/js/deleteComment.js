@@ -43,6 +43,14 @@ function deleteComment(e) {
 
         // Eliminar comentario del Dom
         this.parentElement.parentElement.remove();
+      }).catch(error => {
+        if(error.response.status === 404 || error.response.status === 403){
+          Swal.fire({
+            title: '¡Error!',
+            text: error.response.data,
+            icon: 'error'
+          })
+        }
       });
     }
   });
