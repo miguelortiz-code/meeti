@@ -259,8 +259,11 @@ export const deleteComment = async (req, res) =>{
     return next();
   }
 
+  // Consultar el Meeti del comentario
+  const meeti =  await Meeties.findOne({where: {id: comment.id_meeti}})
+
   // Verificar que el autor sea quien elimine el comentario
-  if(comment.id_user === req.user.id){
+  if(comment.id_user === req.user.id || meeti.id_user  === req.user.id){
     await Comments.destroy({where: {id: comment.id}});
     res.status(200).send('Eliminado correctamente');
     return next();
