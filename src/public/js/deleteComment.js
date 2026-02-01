@@ -34,13 +34,15 @@ function deleteComment(e) {
       }
       // Ejecutar axios y pasar los datos
       axios.post(this.action, data).then((response) => {
-        console.log(response);
-      });
+        
+        Swal.fire({
+          title: "¡Eliminado!",
+          text: response.data,
+          icon: "success",
+        });
 
-      Swal.fire({
-        title: "¡Eliminado!",
-        text: "El comentario ya no está disponible.",
-        icon: "success",
+        // Eliminar comentario del Dom
+        this.parentElement.parentElement.remove();
       });
     }
   });

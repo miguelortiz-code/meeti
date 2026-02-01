@@ -261,7 +261,8 @@ export const deleteComment = async (req, res) =>{
 
   // Verificar que el autor sea quien elimine el comentario
   if(comment.id_user === req.user.id){
-    res.send('Si, eres el autor del comentario');
+    await Comments.destroy({where: {id: comment.id}});
+    res.status(200).send('Eliminado correctamente');
     return next();
   }else{
     res.send('No eres el autor, ¡tramposo!');
