@@ -12,6 +12,7 @@ export const viewNewGroup = async (req, res) => {
     namePage: "Crear nuevo grupo",
     categories,
     data: {},
+    enableBundle: false
   });
 };
 
@@ -127,6 +128,7 @@ export const viewEditGroup = async (req, res, next) => {
     namePage: `Edita el grupo: ${group.group}`,
     group,
     categories,
+     enableBundle: false
   });
 };
 
@@ -240,6 +242,7 @@ export const viewImageGroup = async (req, res) => {
   res.render("groups/image-group", {
     namePage: `Edita la imagen del grupo:  ${group.group}`,
     group,
+    enableBundle: false
   });
 };
 
@@ -297,6 +300,7 @@ export const viewDeleteGroup = async (req, res, next) => {
   res.render("groups/delete-group", {
     namePage: `Eliminar grupo: ${group.group}`,
     group,
+    enableBundle: false
   });
 };
 

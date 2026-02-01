@@ -12,6 +12,7 @@ export const viewNewMeeti = async (req, res) => {
     namePage: "Crear tu Meeti",
     groups,
     data: {},
+    enableBundle: true
   });
 };
 
@@ -193,7 +194,8 @@ export const viewEditMeeit = async(req, res, next) =>{
   res.render('meeties/edit-meeti', {
     namePage: `Editar Meeti: ${meeti.title} `,
     groups,
-    meeti
+    meeti,
+    enableBundle: true
   })
 }
 
@@ -274,7 +276,8 @@ export const viewDeleteMeeti =  async(req, res, next) =>{
   
   res.render('meeties/delete-meeti', {
     namePage: `Eliminar Meeti: ${meeti.title}`,
-    meeti
+    meeti,
+    enableBundle: false
   });
 }
 

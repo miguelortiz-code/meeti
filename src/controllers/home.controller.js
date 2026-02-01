@@ -38,6 +38,7 @@ export const home = async (req, res) => {
     categories,
     meeties,
     moment,
+    enableBundle: false
   });
 };
 
@@ -77,7 +78,8 @@ export const viewMeetiForSlug = async (req, res) =>{
     meeti,
     moment,
     user: req.user || null,
-    comments
+    comments,
+    enableBundle: true
   })
   
 }
@@ -144,7 +146,8 @@ export const viewAssistants = async(req, res) =>{
   res.render('home/view-assistants', {
     namePage: 'Listado de asistentes de la reunión',
     assistants,
-    meeti
+    meeti,
+    enableBundle: false
   })
 }
 
@@ -169,7 +172,8 @@ export const viewUsers = async (req, res, next) =>{
   res.render('home/view-user',{
     namePage: `Perfil del usuario ${user.name}`,
     user,
-    groups
+    groups,
+    enableBundle: false
   })
 }
 
@@ -197,7 +201,8 @@ export const viewGroup = async (req, res, next) => {
     namePage: `Información del grupo ${group.group}`,
     group,
     meeties,
-    moment
+    moment,
+    enableBundle: false
   });
 };
 
@@ -222,7 +227,8 @@ export const viewMeetiForCategory =  async (req, res) =>{
   res.render('home/category', {
     namePage: `Categoria:  ${category.category}`,
     meeties,
-    moment
+    moment,
+    enableBundle: false
   })
 
 }
@@ -247,6 +253,7 @@ export const comments = async (req, res, next) =>{
   next();
 }
 
+// función para eliminar un comentario
 export const deleteComment = async (req, res) =>{
 
   // Tomar el id del comentario desde el front

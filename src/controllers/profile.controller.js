@@ -11,7 +11,8 @@ export const viewProfile = async (req, res )=>{
     res.render('profile/edit-profile', {
         namePage: 'Editar Perfil',
         user,
-        data: {}
+        data: {},
+        enableBundle: false
     })
 }
 
@@ -87,7 +88,8 @@ export const viewChangePassword = async (req, res) =>{
 
   res.render('profile/change-password', {
     namePage: 'Cambia tu contaseña',
-    user
+    user,
+    enableBundle: false
   })
 }
 
@@ -134,7 +136,8 @@ export const viewImageProfile =  async(req, res) =>{
 
   res.render('profile/edit-image', {
     namePage: 'Edita la imagen de perfil',
-    user
+    user,
+    enableBundle: false
   })
 }
 

@@ -25,6 +25,7 @@ export const viewDashboard = async (req, res) =>{
         meeties,
         moment,
         previousMeetings,
-        user
+        user,
+        enableBundle: false
     })
 }

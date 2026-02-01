@@ -9,6 +9,7 @@ const viewRegister = (req, res) => {
   res.render("auth/register", {
     namePage: "Crear Cuenta",
     user: {},
+    enableBundle: false
   });
 };
 
@@ -16,6 +17,7 @@ const viewRegister = (req, res) => {
 const viewLogin = (req, res) => {
   res.render("auth/login", {
     namePage: "Iniciar sesión",
+    enableBundle: false
   });
 };
 
@@ -163,6 +165,7 @@ const login = (req, res, next) => {
     })(req, res, next);
 };
 
+// Función para cerrar sesion
 const logout = (req, res) =>{
   // Cerrar sesión después del cambio de contraseña
   req.logout(err => {
