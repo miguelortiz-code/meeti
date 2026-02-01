@@ -26,7 +26,14 @@ function deleteComment(e) {
     cancelButtonText: "Cancelar",
   }).then((result) => {
     if (result.isConfirmed) {
-      axios.post(this.action).then((response) => {
+      // Tomar el id del comentario
+      const  commentId = this.children[0].value
+      // Crear el objeto
+      const data = {
+        commentId
+      }
+      // Ejecutar axios y pasar los datos
+      axios.post(this.action, data).then((response) => {
         console.log(response);
       });
 

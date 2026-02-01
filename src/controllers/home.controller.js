@@ -248,5 +248,23 @@ export const comments = async (req, res, next) =>{
 }
 
 export const deleteComment = async (req, res) =>{
-  res.send('Se elimino mensaje ...'); 
+
+  // Tomar el id del comentario desde el front
+  const { commentId } = req.body;
+  // Consultar el comentario
+  const comment = await Comments.findOne({where: {id: commentId}});
+  // Verificar si el comentario existe
+  if(!comment){
+    res.send('Acción no valida');
+    return next();
+  }
+
+  // Verificar que el autor sea quien elimine el comentario
+  if(comment.id_user === req.user.id){
+    res.send('Si, eres el autor del comentario');
+    return next();
+  }else{
+    res.send('No eres el autor, ¡tramposo!');
+    return next();
+  }
 }
