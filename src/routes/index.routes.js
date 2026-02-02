@@ -4,6 +4,7 @@ import groupsRoutes from './groups.routes.js';
 import meetiRoutes from './meeties.routes.js';
 import profileRoutes from './profile.routes.js';
 import homeRoutes from './home.routes.js';
+import categoriesRoutes from './categories.routes.js';
 
 export {
     authRoutes,
@@ -11,5 +12,6 @@ export {
     groupsRoutes,
     meetiRoutes,
     profileRoutes,
-    homeRoutes
+    homeRoutes,
+    categoriesRoutes
 }
