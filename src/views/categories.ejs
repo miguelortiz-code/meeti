@@ -1,3 +1,43 @@
 <main class="contenedor contenedor-formularios no-padding">
     <h1><%= namePage %></h1>
+        <form action="/categories/new-category" method="POST" class="default-form" enctype="multipart/form-data">
+        <div class="campo">
+            <label for="category">Nombre de la categoria</label>
+            <input type="text" name="category" id="category" placeholder="Nombre categoria" value="<%= data?.category ?? '' %>">
+        </div>
+    
+        <div class="campo enviar">
+            <input type="submit" value="Crear categoria" class="btn btn-rosa">
+        </div>
+    </form>
+
+    <section class="seccion-admin">
+        <h2>Tus categorias</h2>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Categoria</th>
+                    <th>Url</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <%if(categories.length) {%>
+            <tbody>
+            <% categories.forEach(category => { %>
+                    <tr>
+                        <td><%= category.category %></td>
+                        <td><%= category.slug %></td>
+                        <td>
+                            <a href="/groups/edit-group/<%=category.slug %>" class="btn btn-verde">Editar</a>
+                            <a href="/groups/delete-group/<%=category.slug %>" class="btn btn-rojo">Eliminar</a>
+                        </td>
+                    </tr>
+                <%})%>
+            </tbody>
+            <%} else {%>
+                <p>No tienes grupos creados actualmente</p>
+            <%}%>
+        </table>
+    </section>
 </main>
