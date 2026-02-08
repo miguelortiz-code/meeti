@@ -120,8 +120,8 @@
                 <p> <%= meeti.city%>, <%= meeti.neighborhood %>, <%= meeti.address%> </p>
             </div>
             <!--Mapa de ubicación -->
-            <input type="hidden" id="lat" value="<%= meeti.latitude %>">
-            <input type="hidden" id="lng" value="<%= meeti.longitude %>">
+            <input type="hidden" id="lat" value="<%= meeti.ubication.coordinates[1] %>">
+            <input type="hidden" id="lng" value="<%= meeti.ubication.coordinates[0] %>">
             <input type="hidden" id="address" value="<%= meeti.address %>">
             <div id="ubicacion-meeti"></div>
         </aside>

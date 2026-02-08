@@ -142,7 +142,7 @@ export const newMeetie = async (req, res, next) => {
   }
 
   // Almacenar la ubicación con un point
-  const point  = {type: 'Point', coordinates: [parseFloat(req.body.latitude), parseFloat(req.body.longitude)]}
+  const point  = {type: 'Point', coordinates: [parseFloat(req.body.longitude), parseFloat(req.body.latitude)]}
 
   // Slug del meeti
   const url = slug(title).toLowerCase();
@@ -220,7 +220,7 @@ export const editMeeti = async (req, res) => {
   let { quota } = req.body;
   if (quota === '') quota = 0;
 
-  const point  = {type: 'Point', coordinates: [parseFloat(req.body.latitude), parseFloat(req.body.longitude)]}
+  const point  = {type: 'Point', coordinates: [parseFloat(req.body.longitude), parseFloat(req.body.latitude)]}
   const description = striptags(req.body.description || '').trim();
 
   const {

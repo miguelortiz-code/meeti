@@ -88,8 +88,8 @@
                 value="<%= meeti.neighborhood%>">
         </div>
 
-        <input type="hidden" id="lat" name="latitude" readonly="readonly"  value="<%= meeti.ubication ? meeti.ubication.coordinates[0] : '' %>">
-        <input type="hidden" id="lng" name="longitude" readonly="readonly"  value="<%= meeti.ubication ? meeti.ubication.coordinates[1] : '' %>">
+        <input type="hidden" id="lat" name="latitude" readonly="readonly"  value="<%= meeti.ubication ? meeti.ubication.coordinates[1] : '' %>">
+        <input type="hidden" id="lng" name="longitude" readonly="readonly"  value="<%= meeti.ubication ? meeti.ubication.coordinates[0] : '' %>">
 
         <div class="campo enviar">
             <input type="submit" class="btn btn-rosa" value="Guardar Cambios">

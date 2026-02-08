@@ -58,6 +58,7 @@ export const profile = async (req, res ) =>{
       user,
       messages: req.flash(),
       data: (req.session.formData = req.body),
+      enableBundle: false
     });
   }
 
@@ -104,6 +105,7 @@ export const changePassword = async(req, res) =>{
   return res.render('profile/change-password', {
     namePage: 'Cambia tu contaseña',
     user,
+    enableBundle: false,
     messages: {
       error: ['La contraseña actual es incorrecta']
     }

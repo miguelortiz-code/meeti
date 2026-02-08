@@ -61,6 +61,59 @@ export const viewMeetiForSlug = async (req, res) =>{
   if(!meeti){
     res.redirect('/');
   }
+
+// Punto base (meeti actual)
+const basePoint = Sequelize.literal(`
+  ST_SetSRID(
+    ST_MakePoint(
+      ${meeti.ubication.coordinates[0]},
+      ${meeti.ubication.coordinates[1]}
+    ),
+    4326
+  )::geography
+`);
+
+const distance = Sequelize.fn(
+  'ST_Distance',
+  Sequelize.literal('ubication::geography'),
+  basePoint
+);
+
+const now = new Date();
+const nearbys = await Meeties.findAll({
+  attributes: {
+      include: [[distance, 'distance']]
+    },
+    where: {
+      [Op.and]: [
+        Sequelize.where(distance, { [Op.lte]: 2000 }),
+
+        // EXCLUIR EL MEETI ACTUAL
+        {
+          id: {
+            [Op.ne]: meeti.id
+          }
+        },
+
+        // (opcional pero recomendado)
+       {
+        event_date: {
+          [Op.gte]: now
+        }
+      }
+      ]
+    },
+    order: [[distance, 'ASC']],
+    limit: 3,
+    include: [
+      { model: Groups },
+      {
+        model: Users,
+        attributes: ['id', 'name', 'image', 'code']
+      }
+    ]
+  });
+
   // Si existe Meeti consultar el comentario asociado
   const comments = await Comments.findAll({
     where: {id_meeti  : meeti.id},
@@ -80,6 +133,7 @@ export const viewMeetiForSlug = async (req, res) =>{
     user: req.user || null,
     comments,
     enableBundle: true,
+    nearbys
   })
   
 }
