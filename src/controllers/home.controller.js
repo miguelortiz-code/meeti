@@ -88,13 +88,6 @@ const nearbys = await Meeties.findAll({
       [Op.and]: [
         Sequelize.where(distance, { [Op.lte]: 2000 }),
 
-        // EXCLUIR EL MEETI ACTUAL
-        {
-          id: {
-            [Op.ne]: meeti.id
-          }
-        },
-
         // (opcional pero recomendado)
        {
         event_date: {
@@ -105,6 +98,7 @@ const nearbys = await Meeties.findAll({
     },
     order: [[distance, 'ASC']],
     limit: 3,
+    offset: 1,
     include: [
       { model: Groups },
       {
