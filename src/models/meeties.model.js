@@ -67,14 +67,8 @@ const  Meeties = db.define('meeties', {
         allowNull: false,
     },
 
-    latitude: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-
-    longitude: {
-        type: DataTypes.STRING,
-        allowNull: false,
+    ubication: {
+        type: DataTypes.GEOMETRY('POINT')
     },
 
     interesteds: {

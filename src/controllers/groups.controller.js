@@ -70,6 +70,7 @@ export const newGroup = async (req, res, next) => {
       categories,
       messages: req.flash(),
       data: (req.session.formData = req.body),
+      enableBundle: false,
     });
   }
 

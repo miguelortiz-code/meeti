@@ -26,31 +26,7 @@
     <div class="grid columnas-md-3 ">
         <%if(meeties.length > 0){%>
             <% meeties.forEach( meeti =>{ %>
-        <div class="card">
-            <img src="/uploads/groups/<%= meeti.group.image%>">
-            <% moment.locale('es') %>
-            <% const date =`${meeti.event_date} ${meeti.hour}` %>
-            <div class="card-texto">
-                <p class="fecha"><%= moment(date).format('LLLL') %> Horas</p>
-                <a href="/meeti/<%=meeti.slug%>">
-                    
-                    <h3><%= meeti.title %></h3>
-                </a>
-                <div class="info-autor">
-                    <% if(meeti.user.image){%>
-                        <div class="imagen">
-                            <img src="/uploads/profiles/<%= meeti.user.image %>" alt="<%=`Imagen de: ${meeti.user.name} Creador del Meeti ${meeti.title}`%>">
-                        </div>
-                    <%}else { %>
-                        <div class="imagen"></div>
-                    <%}%>
-                    <div class="informacion">
-                        <p>Organizado por:</p>
-                        <p class="autor"><%= meeti.user.name %></p>
-                    </div>
-                </div>
-            </div>
-        </div>
+                 <%- include('../partials/cards', { meeti }) %>
             <%})%>
         <% }%>
     </div>

@@ -133,13 +133,16 @@ export const newMeetie = async (req, res, next) => {
   // Si no hay errores
   let quota = req.body.quota;
   const { id: id_user } = req.user;
-  const { grupoId, title, guest, event_date, hour, country, city, zip_code, address, neighborhood, latitude, longitude} = req.body;
+  const { grupoId, title, guest, event_date, hour, country, city, zip_code, address, neighborhood} = req.body;
   // Cupo
   if (!quota || quota === "") {
     quota = 0;
   } else {
     quota = Number(quota);
   }
+
+  // Almacenar la ubicación con un point
+  const point  = {type: 'Point', coordinates: [parseFloat(req.body.latitude), parseFloat(req.body.longitude)]}
 
   // Slug del meeti
   const url = slug(title).toLowerCase();
@@ -160,8 +163,7 @@ export const newMeetie = async (req, res, next) => {
       zip_code,
       address,
       neighborhood,
-      latitude,
-      longitude,
+      ubication: point,
       id_user,
     });
 
@@ -187,7 +189,7 @@ export const viewEditMeeit = async(req, res, next) =>{
   if(!groups || !meeti){
     req.flash('error', 'Operación no valida');
     res.redirect('/dashboard');
-    next();
+    return next();
   }
 
   // Mostrar vista
@@ -195,7 +197,7 @@ export const viewEditMeeit = async(req, res, next) =>{
     namePage: `Editar Meeti: ${meeti.title} `,
     groups,
     meeti,
-    enableBundle: true
+    enableBundle: true 
   })
 }
 
@@ -218,6 +220,7 @@ export const editMeeti = async (req, res) => {
   let { quota } = req.body;
   if (quota === '') quota = 0;
 
+  const point  = {type: 'Point', coordinates: [parseFloat(req.body.latitude), parseFloat(req.body.longitude)]}
   const description = striptags(req.body.description || '').trim();
 
   const {
@@ -231,8 +234,6 @@ export const editMeeti = async (req, res) => {
     zip_code,
     address,
     neighborhood,
-    latitude,
-    longitude
   } = req.body;
 
   if (title !== meeti.title) {
@@ -254,8 +255,7 @@ export const editMeeti = async (req, res) => {
       zip_code,
       address,
       neighborhood,
-      latitude,
-      longitude
+      ubication: point
     });
     // Redireccionar la usuario
     req.flash('exito', 'Meeti editado correctamente');

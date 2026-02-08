@@ -79,7 +79,7 @@ export const viewMeetiForSlug = async (req, res) =>{
     moment,
     user: req.user || null,
     comments,
-    enableBundle: true
+    enableBundle: true,
   })
   
 }

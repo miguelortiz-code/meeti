@@ -127,3 +127,15 @@
         </aside>
     </div>
 </section>
+
+<h2>Otros meeti's Cercanos</h2>
+
+<div class="contenedor cercanos">
+    <% if(nearbys.length > 0){%>
+    <% nearbys.forEach(meeti =>{%> 
+        <%- include('../partials/cards', { meeti }) %>
+    <% })%>
+    <%} else {%>
+        <p>No hay meeti's cercanos </p>
+    <% }%>
+</div>

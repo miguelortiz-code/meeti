@@ -1,39 +1,51 @@
 const categories = [
     {
-        category: 'Programación'
+        category: 'Programación',
+        slug: 'progrmacion',
     },
     {
-        category: 'Diseño'
+        category: 'Diseño',
+        slug: 'diseno',
     },
     {
-        category: 'Negocios y Emprendimiento'
+        category: 'Negocios y Emprendimiento',
+        slug: 'negocios-y-emprendemiento',
     },
     {
-        category: 'Moda y Estilo'
+        category: 'Moda y Estilo',
+        slug: 'moda-y-estilo',
     },
     {
-        category: 'Salud y Ejercicio'
+        category: 'Salud y Ejercicio',
+        slug: 'salud-y-ejercicio',
     },
     {
-        category: 'Fotografía y Viajes'
+        category: 'Fotografía y Viajes',
+        slug: 'fotografia-y-viajes',
     },
     {
-        category: 'Comida y Bebida'
+        category: 'Comida y Bebida',
+        slug: 'comida-y-bebida'
     },
     {
-        category: 'Diseño y Arquitectura'
+        category: 'Diseño y Arquitectura',
+        slug: 'diseno-y-arquitectura'
     },
     {
-        category: 'Café'
+        category: 'Café',
+        slug: 'cafe',
     },
     {
-        category: 'Cine y Películas'
+        category: 'Cine y Películas',
+        slug: 'cine-y-peliculas',
     },
     {
-        category: 'Libros'
+        category: 'Libros',
+        slug: 'libros',
     },
     {
-        category: 'Aprendizaje'
+        category: 'Aprendizaje',
+        slug: 'aprendizaje'
     },
 ];
 
