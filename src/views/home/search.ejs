@@ -1,0 +1,13 @@
+<div class="contenedor proximos-eventos">
+    <h1><%= namePage %></h1>
+    <% if(meeties.length > 0){%>
+    <div class="grid columnas-md-3 ">
+        <% meeties.forEach(meeti =>{%>
+            <%- include('../partials/cards', { meeti }) %>
+        <%})%>
+    </div>
+    <%} else{%>
+        <p>No hay resultados de la búsqueda </p>
+        <a href="/" class="btn btn-rosa">Volver al inicio</a>
+    <%}%>
+</div>

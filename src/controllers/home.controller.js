@@ -327,3 +327,50 @@ export const deleteComment = async (req, res) =>{
     return next();
   }
 }
+
+export const viewSearch = async (req, res) => {
+  const { category, title, city, country } = req.query;
+
+  // WHERE dinámico para Meeties
+  const whereMeeties = {};
+
+  if (title) {
+    whereMeeties.title = { [Op.iLike]: `%${title.trim()}%` };
+  }
+
+  if (city) {
+    whereMeeties.city = { [Op.iLike]: `%${city.trim()}%` };
+  }
+
+  if (country) {
+    whereMeeties.country = { [Op.iLike]: `%${country.trim()}%` };
+  }
+
+  // WHERE dinámico para Groups
+  const whereGroup = {};
+
+  if (category) {
+    whereGroup.id_category = category;
+  }
+
+  const meeties = await Meeties.findAll({
+    where: whereMeeties,
+    include: [
+      {
+        model: Groups,
+        where: whereGroup,
+        required: Object.keys(whereGroup).length > 0
+      },
+      {
+        model: Users,
+        attributes: ['id', 'name', 'image', 'code']
+      }
+    ]
+  });
+
+  res.render('home/search', {
+    namePage: 'Resultados de la Búsqueda',
+    moment,
+    meeties
+  });
+};
