@@ -206,27 +206,9 @@ Se implementan consultas espaciales con PostgreSQL + PostGIS para mostrar los me
 - Listado de asistentes
 
 ---
-
-📂 Estructura general del proyecto
-src/
-│
-├── controllers/
-├── models/
-├── routes/
-├── middlewares/
-├── views/
-│   ├── partials/
-│   └── profile/
-├── public/
-│   ├── js/
-│   └── css/
-├── seed/
-└── config/
-
----
 🔌 Endpoints principales
 🔐 Autenticación (/auth)
-
+---
 | Método | Ruta                  | Descripción              |
 | ------ | --------------------- | ------------------------ |
 | GET    | /auth/login           | Vista login              |
