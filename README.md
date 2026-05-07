@@ -207,8 +207,9 @@ Se implementan consultas espaciales con PostgreSQL + PostGIS para mostrar los me
 
 ---
 🔌 Endpoints principales
-🔐 Autenticación (/auth)
 ---
+🔐 Autenticación (/auth)
+
 | Método | Ruta                  | Descripción              |
 | ------ | --------------------- | ------------------------ |
 | GET    | /auth/login           | Vista login              |
